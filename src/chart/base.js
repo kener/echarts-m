@@ -17,10 +17,15 @@ define(function (require) {
     var ecAnimation = require('../util/ecAnimation');
     var ecEffect = require('../util/ecEffect');
     var accMath = require('../util/accMath');
+    var ComponentBase = require('../component/Base');
+
     var zrUtil = require('zrender/tool/util');
     var zrArea = require('zrender/tool/area');
     
-    function Base(){
+    function Base(ecTheme, messageCenter, zr, option, myChart) {
+
+        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
+
         var self = this;
         this.selectedMap = {};
         this.lastShapeList = [];
@@ -250,7 +255,7 @@ define(function (require) {
         /**
          * 折线图、柱形图公用方法
          */
-        _bulidPosition: function() {
+        _buildPosition: function() {
             this._symbol = this.option.symbolList;
             this._sIndex2ShapeMap = {};  // series拐点图形类型，seriesIndex索引到shape type
             this._sIndex2ColorMap = {};  // series默认颜色索引，seriesIndex索引到color
@@ -573,11 +578,7 @@ define(function (require) {
                 );
             }
             
-            var value = data != null
-                        ? (data.value != null
-                          ? data.value
-                          : data)
-                        : '-';
+            var value = this.getDataFromOption(data, '-');
             
             if (formatter) {
                 if (typeof formatter === 'function') {
@@ -621,7 +622,6 @@ define(function (require) {
         _buildMarkPoint: function (seriesIndex) {
             var attachStyle =  (this.markAttachStyle || {})[seriesIndex];
             var serie = this.series[seriesIndex];
-            var _zlevelBase = this.getZlevelBase();
             var mpData;
             var pos;
             var markPoint = zrUtil.clone(serie.markPoint);
@@ -644,7 +644,8 @@ define(function (require) {
             var shapeList = this._markPoint(seriesIndex, markPoint);
             
             for (var i = 0, l = shapeList.length; i < l; i++) {
-                shapeList[i].z = _zlevelBase + 1;
+                shapeList[i].zlevel = this.getZlevelBase();
+                shapeList[i].z = this.getZBase() + 1;
                 for (var key in attachStyle) {
                     shapeList[i][key] = zrUtil.clone(attachStyle[key]);
                 }
@@ -666,7 +667,6 @@ define(function (require) {
         _buildMarkLine: function (seriesIndex) {
             var attachStyle =  (this.markAttachStyle || {})[seriesIndex];
             var serie = this.series[seriesIndex];
-            var _zlevelBase = this.getZlevelBase();
             var mlData;
             var pos;
             var markLine = zrUtil.clone(serie.markLine);
@@ -702,7 +702,8 @@ define(function (require) {
             var shapeList = this._markLine(seriesIndex, markLine);
             
             for (var i = 0, l = shapeList.length; i < l; i++) {
-                shapeList[i].z = _zlevelBase + 1;
+                shapeList[i].zlevel = this.getZlevelBase();
+                shapeList[i].z = this.getZBase() + 1;
                 for (var key in attachStyle) {
                     shapeList[i][key] = zrUtil.clone(attachStyle[key]);
                 }
@@ -750,9 +751,7 @@ define(function (require) {
                     if (data[i].x == null || data[i].y == null) {
                         continue;
                     }
-                    value = data[i] != null && data[i].value != null
-                            ? data[i].value
-                            : '';
+                    value = this.getDataFromOption(data[i], '');
                     // 图例
                     if (legend) {
                         color = legend.getColor(serie.name);
@@ -884,9 +883,7 @@ define(function (require) {
                 
                 // 组装一个mergeData
                 mergeData = this.deepMerge(data[i]);
-                value = mergeData != null && mergeData.value != null
-                        ? mergeData.value
-                        : '';
+                value = this.getDataFromOption(mergeData, '');
                 // 值域
                 if (dataRange) {
                     color = isNaN(value) ? color : dataRange.getColor(value);
@@ -905,7 +902,8 @@ define(function (require) {
                 }
                 
                 // 标准化一些参数
-                data[i][0].tooltip = mergeData.tooltip 
+                data[i][0].tooltip = mergeData.tooltip
+                                     || mlOption.tooltip
                                      || {trigger:'item'}; // tooltip.trigger指定为item
                 data[i][0].name = data[i][0].name != null ? data[i][0].name : '';
                 data[i][1].name = data[i][1].name != null ? data[i][1].name : '';
@@ -972,11 +970,7 @@ define(function (require) {
             orient                  // 走向，用于默认文字定位
         ) {
             var queryTarget = [data, serie];
-            var value = data != null
-                        ? (data.value != null
-                          ? data.value
-                          : data)
-                        : '-';
+            var value = this.getDataFromOption(data, '-');
             
             symbol = this.deepQuery(queryTarget, 'symbol') || symbol;
             var symbolSize = this.deepQuery(queryTarget, 'symbolSize');
@@ -1114,16 +1108,8 @@ define(function (require) {
             xEnd, yEnd,             // 坐标
             color                   // 默认color，来自legend或dataRange全局分配
         ) {
-            var value0 = data[0] != null
-                        ? (data[0].value != null
-                          ? data[0].value
-                          : data[0])
-                        : '-';
-            var value1 = data[1] != null
-                        ? (data[1].value != null
-                          ? data[1].value
-                          : data[1])
-                        : '-';
+            var value0 = this.getDataFromOption(data[0], '-');
+            var value1 = this.getDataFromOption(data[1], '-');
             var symbol = [
                 this.query(data[0], 'symbol') || mlOption.symbol[0],
                 this.query(data[1], 'symbol') || mlOption.symbol[1]
@@ -1265,11 +1251,7 @@ define(function (require) {
             }
             // 值域
             if (dataRange) {
-                value = data[0] != null
-                        ? (data[0].value != null
-                          ? data[0].value
-                          : data[0])
-                        : '-';
+                value = this.getDataFromOption(data[0], '-');
                 color = isNaN(value) ? color : dataRange.getColor(value);
                 
                 nColor = this.deepQuery(
@@ -1617,6 +1599,8 @@ define(function (require) {
             }
         }
     };
+
+    zrUtil.inherits(Base, ComponentBase);
 
     return Base;
 });

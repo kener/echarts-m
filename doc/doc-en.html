@@ -1758,6 +1758,12 @@ require(['echarts'], function (ec){
                             <td> 5 </td>
                             <td> the number of segments. Defaults to 5. Linear gradient when set to 0. When calculable is true, it is equally split into 100 parts by default. </td>
                         </tr>
+
+                        <tr>
+                            <td> <b>{boolean | string}</b> selectedMode </td>
+                            <td> true </td>
+                            <td> selection mode. Enable dataRange switch by default. Can be one of: single, multiple </td>
+                        </tr>
                         <tr>
                             <td> <b>{boolean}</b> calculable </td>
                             <td> false </td>
@@ -4105,12 +4111,12 @@ geoCoord : {
                             <td> line style, can be: 'curve' | 'line' </td>
                         </tr>
                         <tr>
-                            <td> <b>{color}</b> borderColor</td>
+                            <td> <b>{color}</b> color</td>
                             <td> '#5182ab' </td>
                             <td> color of the line </td>
                         </tr>
                         <tr>
-                            <td> <b>{number}</b> borderWidth </td>
+                            <td> <b>{number}</b> width</td>
                             <td> 1 </td>
                             <td> width of the line </td>
                         </tr>
@@ -4356,7 +4362,7 @@ geoCoord : {
                         <tr>
                             <td> itemStyle </td>
                             <td></td>
-                            <td> see <a href="#ItemStyle">itemStyle</a> </td>
+                            <td> see <a href="#NodeStyle">nodeStyle</a> </td>
                         </tr>
                     </table>
 
@@ -4385,7 +4391,7 @@ geoCoord : {
                         <tr>
                             <td> itemStyle </td>
                             <td></td>
-                            <td> see <a href="#ItemStyle">itemStyle</a> </td>
+                            <td> see <a href="#LinkStyle">linkStyle</a> </td>
                         </tr>
                     </table>
                     <h5>matrix<a name="GraphMatrix"></a></h5>

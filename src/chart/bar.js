@@ -6,7 +6,6 @@
  *
  */
 define(function (require) {
-    var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     
     // 图形依赖
@@ -29,10 +28,8 @@ define(function (require) {
      * @param {Object} component 组件
      */
     function Bar(ecTheme, messageCenter, zr, option, myChart){
-        // 基类
-        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         // 图表基类
-        ChartBase.call(this);
+        ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         
         this.refresh(option);
     }
@@ -43,7 +40,7 @@ define(function (require) {
          * 绘制图形
          */
         _buildShape: function () {
-            this._bulidPosition();
+            this._buildPosition();
         },
         
         _buildNormal: function(seriesArray, maxDataLength, locationMap, xMarkMap, orient) {
@@ -98,11 +95,7 @@ define(function (require) {
                         seriesIndex = locationMap[j][m];
                         serie = series[seriesIndex];
                         data = serie.data[i];
-                        value = data != null
-                                ? (data.value != null
-                                  ? data.value
-                                  : data)
-                                : '-';
+                        value = this.getDataFromOption(data, '-');
                         xMarkMap[seriesIndex] = xMarkMap[seriesIndex] 
                                                 || {
                                                     min: Number.POSITIVE_INFINITY,
@@ -224,11 +217,7 @@ define(function (require) {
                         seriesIndex = locationMap[j][m];
                         serie = series[seriesIndex];
                         data = serie.data[i];
-                        value = data != null
-                                ? (data.value != null
-                                  ? data.value
-                                  : data)
-                                : '-';
+                        value = this.getDataFromOption(data, '-');
                         if (value != '-') {
                             // 只关心空数据
                             continue;
@@ -325,11 +314,7 @@ define(function (require) {
 
                     for (var i = 0, l = serie.data.length; i < l; i++) {
                         var data = serie.data[i];
-                        var value = data != null
-                                    ? (data.value != null
-                                      ? data.value
-                                      : data)
-                                    : '-';
+                        var value = this.getDataFromOption(data, '-');
                         if (!(value instanceof Array)) {
                             continue;
                         }
@@ -660,7 +645,8 @@ define(function (require) {
             var emphasis = this.deepMerge(queryTarget, 'itemStyle.emphasis');
             
             barShape = {
-                z : this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 clickable: this.deepQuery(queryTarget, 'clickable'),
                 style: {
                     x: x,
@@ -889,7 +875,6 @@ define(function (require) {
     };
     
     zrUtil.inherits(Bar, ChartBase);
-    zrUtil.inherits(Bar, ComponentBase);
     
     // 图表注册
     require('../chart').define('bar', Bar);

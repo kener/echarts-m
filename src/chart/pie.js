@@ -6,7 +6,6 @@
  *
  */
 define(function (require) {
-    var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     
     // 图形依赖
@@ -30,10 +29,8 @@ define(function (require) {
      * @param {Object} component 组件
      */
     function Pie(ecTheme, messageCenter, zr, option, myChart){
-        // 基类
-        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         // 图表基类
-        ChartBase.call(this);
+        ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
 
         var self = this;
         /**
@@ -112,7 +109,8 @@ define(function (require) {
                     this._selected[i] = [];
                     if (this.deepQuery([series[i], this.option], 'calculable')) {
                         pieCase = {
-                            z: this._zlevelBase,
+                            zlevel: this.getZlevelBase(),
+                            z: this.getZBase(),
                             hoverable: false,
                             style: {
                                 x: center[0],          // 圆心横坐标
@@ -350,7 +348,8 @@ define(function (require) {
                 );
 
             var sector = {
-                z: this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 clickable: this.deepQuery(queryTarget, 'clickable'),
                 style: {
                     x: center[0],          // 圆心横坐标
@@ -482,7 +481,8 @@ define(function (require) {
             data.__labelY = y;
             
             var ts = new TextShape({
-                z: this._zlevelBase + 1,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase() + 1,
                 hoverable: false,
                 style: {
                     x: x,
@@ -584,7 +584,8 @@ define(function (require) {
 
                 return new BrokenLineShape({
                     // shape: 'brokenLine',
-                    z: this._zlevelBase + 1,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase() + 1,
                     hoverable: false,
                     style: {
                         pointList: [
@@ -1046,7 +1047,6 @@ define(function (require) {
     };
     
     zrUtil.inherits(Pie, ChartBase);
-    zrUtil.inherits(Pie, ComponentBase);
     
     // 图表注册
     require('../chart').define('pie', Pie);

@@ -1759,6 +1759,11 @@ require(['echarts'], function (ec){
                             <td> 分割段数，默认为5，为0时为线性渐变，calculable为true是默认均分100份 </td>
                         </tr>
                         <tr>
+                            <td> <b>{boolean | string}</b> selectedMode </td>
+                            <td> true </td>
+                            <td> 选择模式，默认开启值域开关，可选single，multiple </td>
+                        </tr>
+                        <tr>
                             <td> <b>{boolean}</b> calculable </td>
                             <td> false </td>
                             <td> 是否启用值域漫游，启用后无视splitNumber，值域显示为线性渐变 </td>
@@ -4105,12 +4110,12 @@ geoCoord : {
                             <td> 线条类型，可选为：'curve'（曲线） | 'line'（直线） </td>
                         </tr>
                         <tr>
-                            <td> <b>{color}</b> borderColor</td>
+                            <td> <b>{color}</b> color</td>
                             <td> '#5182ab' </td>
                             <td> 线条颜色 </td>
                         </tr>
                         <tr>
-                            <td> <b>{number}</b> borderWidth </td>
+                            <td> <b>{number}</b> width </td>
                             <td> 1 </td>
                             <td> 线宽 </td>
                         </tr>
@@ -4356,7 +4361,7 @@ geoCoord : {
                         <tr>
                             <td> itemStyle </td>
                             <td></td>
-                            <td> 详见 <a href="#ItemStyle">itemStyle</a> </td>
+                            <td> 详见 <a href="#NodeStyle">nodeStyle</a> </td>
                         </tr>
                     </table>
 
@@ -4385,7 +4390,7 @@ geoCoord : {
                         <tr>
                             <td> itemStyle </td>
                             <td></td>
-                            <td> see <a href="#ItemStyle">itemStyle</a> </td>
+                            <td> see <a href="#LinkStyle">linkStyle</a> </td>
                         </tr>
                     </table>
                     <h5>matrix<a name="GraphMatrix"></a></h5>

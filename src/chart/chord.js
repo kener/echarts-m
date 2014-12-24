@@ -9,7 +9,6 @@
 define(function (require) {
     'use strict';
     
-    var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     
     // 图形依赖
@@ -28,10 +27,8 @@ define(function (require) {
     var ChordLayout = require('../layout/Chord');
     
     function Chord(ecTheme, messageCenter, zr, option, myChart) {
-        // 基类
-        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         // 图表基类
-        ChartBase.call(this);
+        ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
 
         this.scaleLineLength = 4;
 
@@ -126,6 +123,11 @@ define(function (require) {
             var nodeFilter = function (n) {
                 return n.layout.size > 0;
             };
+            var createEdgeFilter = function (graph) {
+                return function (e) {
+                    return graph.getEdge(e.node2, e.node1);
+                }
+            }
             for (var i = 0; i < series.length; i++) {
                 var serie = series[i];
 
@@ -142,6 +144,10 @@ define(function (require) {
                     }
                     // 过滤输出为0的节点
                     graph.filterNode(nodeFilter, this);
+                    if (serie.ribbonType) {
+                        graph.filterEdge(createEdgeFilter(graph));
+                    }
+
                     graphs.push(graph);
 
                     graph.__serie = serie;
@@ -447,7 +453,8 @@ define(function (require) {
                 var startAngle = node.layout.startAngle / Math.PI * 180 * sign;
                 var endAngle = node.layout.endAngle / Math.PI * 180 * sign;
                 var sector = new SectorShape({
-                    z: this.getZlevelBase(),
+                    zlevel: this.getZlevelBase(),
+                    z : this.getZBase(),
                     style: {
                         x: center[0],
                         y: center[1],
@@ -525,8 +532,8 @@ define(function (require) {
                     color = category ? this.getColor(category.name) : this.getColor(node.id);
                 }
                 var iconShape = new IconShape({
-                    z: this.getZlevelBase() + 1,
-                    //z: 1,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase() + 1,
                     style: {
                         x: - node.layout.size,
                         y: - node.layout.size,
@@ -602,7 +609,8 @@ define(function (require) {
                 vec2.add(start, start, center);
 
                 var labelShape = {
-                    z: this.getZlevelBase() + 1,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase() + 1,
                     hoverable: false,
                     style: {
                         text: node.data.label == null ? node.id : node.data.label,
@@ -683,7 +691,8 @@ define(function (require) {
                     serie, edge.data, 'emphasis'
                 );
                 var ribbon = new RibbonShape({
-                    z: this.getZlevelBase(),
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase(),
                     style: {
                         x: center[0],
                         y: center[1],
@@ -746,8 +755,8 @@ define(function (require) {
                 );
 
                 var curveShape = new BezierCurveShape({
-                    z: this.getZlevelBase(),
-                    // z: 0,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase(),
                     style: {
                         xStart: shape1.position[0],
                         yStart: shape1.position[1],
@@ -852,7 +861,8 @@ define(function (require) {
                     var end = vec2.scale([], v, radius[1] + this.scaleLineLength);
                     vec2.add(end, end, center);
                     var scaleShape = new LineShape({
-                        z: this.getZlevelBase() - 1,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase() - 1,
                         hoverable: false,
                         style: {
                             xStart: start[0],
@@ -892,7 +902,8 @@ define(function (require) {
                                      || theta >= 270;
 
                     var textShape = new TextShape({
-                        z: this.getZlevelBase() - 1,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase() - 1,
                         hoverable: false,
                         style: {
                             x: isRightSide 
@@ -971,7 +982,6 @@ define(function (require) {
     };
     
     zrUtil.inherits(Chord, ChartBase);
-    zrUtil.inherits(Chord, ComponentBase);
     
     // 图表注册
     require('../chart').define('chord', Chord);

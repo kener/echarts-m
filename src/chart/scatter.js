@@ -6,7 +6,6 @@
  *
  */
 define(function (require) {
-    var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
     
     // 图形依赖
@@ -29,10 +28,8 @@ define(function (require) {
      * @param {Object} component 组件
      */
     function Scatter(ecTheme, messageCenter, zr, option, myChart){
-        // 基类
-        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         // 图表基类
-        ChartBase.call(this);
+        ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
 
         this.refresh(option);
     }
@@ -150,11 +147,7 @@ define(function (require) {
                 pointList[seriesIndex] = [];
                 for (var i = 0, l = serie.data.length; i < l; i++) {
                     data = serie.data[i];
-                    value = data != null
-                            ? (data.value != null
-                              ? data.value
-                              : data)
-                            : '-';
+                    value = this.getDataFromOption(data, '-');
                     if (value === '-' || value.length < 2) {
                         // 数据格式不符
                         continue;
@@ -350,14 +343,17 @@ define(function (require) {
                 'rgba(0,0,0,0)',
                 'vertical'
             );
-            itemShape.z = this._zlevelBase;
+            itemShape.zlevel = this.getZlevelBase();
+            itemShape.z = this.getZBase();
+            
             itemShape._main = true;
             return itemShape;
         },
         
         _getLargeSymbol: function (pointList, nColor) {
             return new SymbolShape({
-                z: this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 _main: true,
                 hoverable: false,
                 style: {
@@ -435,7 +431,6 @@ define(function (require) {
     };
     
     zrUtil.inherits(Scatter, ChartBase);
-    zrUtil.inherits(Scatter, ComponentBase);
     
     // 图表注册
     require('../chart').define('scatter', Scatter);

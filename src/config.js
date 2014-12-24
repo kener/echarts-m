@@ -52,6 +52,8 @@ define(function() {
 
         // 图表标题
         title: {
+            zlevel: 0,                  // 一级层叠
+            z: 6,                       // 二级层叠
             text: '',
             // link: null,             // 超链接跳转
             // target: null,           // 仅支持self | blank
@@ -83,6 +85,8 @@ define(function() {
         
         // 图例
         legend: {
+            zlevel: 0,                  // 一级层叠
+            z: 4,                       // 二级层叠
             show: true,
             orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
                                        // 'horizontal' ¦ 'vertical'
@@ -111,6 +115,8 @@ define(function() {
         
         // 值域
         dataRange: {
+            zlevel: 0,                  // 一级层叠
+            z: 4,                       // 二级层叠
             show: true,
             orient: 'vertical',        // 布局方式，默认为垂直布局，可选为：
                                        // 'horizontal' ¦ 'vertical'
@@ -134,6 +140,7 @@ define(function() {
             precision: 0,              // 小数精度，默认为0，无小数点
             splitNumber: 5,            // 分割段数，默认为5，为0时为线性渐变
             calculable: false,         // 是否值域漫游，启用后无视splitNumber，线性渐变
+            selectedMode: true,        // 选择模式，默认开启值域开关
             hoverLink: true,
             realtime: true,
             color:['#006edd','#e0ffff'],//颜色 
@@ -145,6 +152,8 @@ define(function() {
         },
 
         toolbox: {
+            zlevel: 0,                  // 一级层叠
+            z: 6,                       // 二级层叠
             show: false,
             orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
                                        // 'horizontal' ¦ 'vertical'
@@ -235,6 +244,8 @@ define(function() {
 
         // 提示框
         tooltip: {
+            zlevel: 1,                  // 一级层叠，频繁变化的tooltip指示器在pc上独立一层
+            z: 8,                       // 二级层叠
             show: true,
             showContent: true,         // tooltip主体内容
             trigger: 'item',           // 触发类型，默认数据触发，见下图，可选为：'item' ¦ 'axis'
@@ -276,6 +287,8 @@ define(function() {
 
         // 区域缩放控制器
         dataZoom: {
+            zlevel: 0,                  // 一级层叠
+            z: 4,                       // 二级层叠
             show: false,
             orient: 'horizontal',      // 布局方式，默认为水平布局，可选为：
                                        // 'horizontal' ¦ 'vertical'
@@ -300,6 +313,8 @@ define(function() {
 
         // 网格
         grid: {
+            zlevel: 0,                  // 一级层叠
+            z: 0,                       // 二级层叠
             x: 80,
             y: 60,
             x2: 80,
@@ -313,6 +328,8 @@ define(function() {
 
         // 类目轴
         categoryAxis: {
+            zlevel: 0,                  // 一级层叠
+            z: 0,                       // 二级层叠
             show: true,
             position: 'bottom',    // 位置
             name: '',              // 坐标轴名字，默认为空
@@ -370,6 +387,8 @@ define(function() {
 
         // 数值型坐标轴默认参数
         valueAxis: {
+            zlevel: 0,                  // 一级层叠
+            z: 0,                       // 二级层叠
             show: true,
             position: 'left',      // 位置
             name: '',              // 坐标轴名字，默认为空
@@ -425,6 +444,8 @@ define(function() {
         },
 
         polar: {
+            zlevel: 0,                  // 一级层叠
+            z: 0,                       // 二级层叠
             center: ['50%', '50%'],    // 默认全局居中
             radius: '75%',
             startAngle: 90,
@@ -470,6 +491,8 @@ define(function() {
         },
 
         timeline: {
+            zlevel: 0,                  // 一级层叠
+            z: 4,                       // 二级层叠
             show: true,
             type: 'time',  // 模式是时间类型，支持 number
             notMerge: false,
@@ -526,6 +549,8 @@ define(function() {
         },
         
         roamController: {
+            zlevel: 0,                  // 一级层叠
+            z: 4,                       // 二级层叠
             show: true,
             x: 'left',                 // 水平安放位置，默认为全图左对齐，可选为：
                                        // 'center' ¦ 'left' ¦ 'right'
@@ -548,6 +573,8 @@ define(function() {
         
         // 柱形图默认参数
         bar: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: true,
             // stack: null
@@ -589,6 +616,8 @@ define(function() {
 
         // 折线图默认参数
         line: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: true,
             // stack: null
@@ -633,6 +662,8 @@ define(function() {
         
         // K线图默认参数
         k: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: false,
             xAxisIndex: 0,
@@ -658,6 +689,8 @@ define(function() {
         
         // 散点图默认参数
         scatter: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: true,
             xAxisIndex: 0,
@@ -709,6 +742,8 @@ define(function() {
 
         // 雷达图默认参数
         radar: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: true,
             polarIndex: 0,
@@ -737,6 +772,8 @@ define(function() {
 
         // 饼图默认参数
         pie: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: true,
             center: ['50%', '50%'],     // 默认全局居中
@@ -792,6 +829,8 @@ define(function() {
         },
         
         map: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             mapType: 'china',   // 各省的mapType暂时都用中文
             //mapLocation: {
                 // x: 'center' | 'left' | 'right' | 'x%' | {number},
@@ -842,6 +881,8 @@ define(function() {
         },
         
         force: {
+            zlevel: 1,                  // 一级层叠
+            z: 2,                       // 二级层叠
             // 布局中心
             center: ['50%', '50%'],
 
@@ -949,6 +990,8 @@ define(function() {
         },
 
         chord: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             radius: ['65%', '75%'],
             center: ['50%', '50%'],
@@ -1038,6 +1081,8 @@ define(function() {
         },
 
         gauge: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             center: ['50%', '50%'],    // 默认全局居中
             legendHoverLink: true,
             radius: '75%',
@@ -1111,6 +1156,8 @@ define(function() {
         },
         
         funnel: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: true,
             x: 80,
@@ -1162,6 +1209,8 @@ define(function() {
         },
         
         eventRiver: {
+            zlevel: 0,                  // 一级层叠
+            z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: true,
             itemStyle: {
@@ -1188,6 +1237,8 @@ define(function() {
         },
         
         island: {
+            zlevel: 0,                  // 一级层叠
+            z: 5,                       // 二级层叠
             r: 15,
             calculateStep: 0.1  // 滚轮可计算步长 0.1 = 10%
         },
@@ -1313,6 +1364,7 @@ define(function() {
             DATA_CHANGED: 'dataChanged',
             DATA_ZOOM: 'dataZoom',
             DATA_RANGE: 'dataRange',
+            DATA_RANGE_SELECTED: 'dataRangeSelected',
             DATA_RANGE_HOVERLINK: 'dataRangeHoverLink',
             LEGEND_SELECTED: 'legendSelected',
             LEGEND_HOVERLINK: 'legendHoverLink',
@@ -1330,7 +1382,7 @@ define(function() {
             ROAMCONTROLLER: 'roamController'
         },
         DRAG_ENABLE_TIME: 120,   // 降低图表内元素拖拽敏感度，单位ms，不建议外部干预
-        EFFECT_ZLEVEL : 1, // for mobile
+        EFFECT_ZLEVEL : 10,       // 特效动画zlevel
         // 主题，默认标志图形类型列表
         symbolList: [
           'circle', 'rectangle', 'triangle', 'diamond',

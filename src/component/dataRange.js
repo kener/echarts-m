@@ -146,13 +146,17 @@ define(function (require) {
                 );
                 itemShape._idx = i;
                 itemShape.onmousemove = this._dispatchHoverLink;
-                itemShape.onclick = this._dataRangeSelected;
+                if (this.dataRangeOption.selectedMode) {
+                    itemShape.clickable = true;
+                    itemShape.onclick = this._dataRangeSelected;
+                }
                 this.shapeList.push(new RectangleShape(itemShape));
                 
                 if (needValueText) {
                     // 文字
                     textShape = {
-                        z : this._zlevelBase,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase(),
                         style : {
                             x : lastX + itemWidth + 5,
                             y : lastY,
@@ -165,8 +169,7 @@ define(function (require) {
                         },
                         highlightStyle:{
                             brushType: 'fill'
-                        },
-                        clickable : true
+                        }
                     };
                     if (this.dataRangeOption.orient == 'vertical'
                         && this.dataRangeOption.x == 'right'
@@ -175,7 +178,11 @@ define(function (require) {
                         textShape.style.textAlign = 'right';
                     }
                     textShape._idx = i;
-                    textShape.onclick = this._dataRangeSelected;
+                    textShape.onmousemove = this._dispatchHoverLink;
+                    if (this.dataRangeOption.selectedMode) {
+                        textShape.clickable = true;
+                        textShape.onclick = this._dataRangeSelected;
+                    }
                     this.shapeList.push(new TextShape(textShape));
                 }
 
@@ -260,7 +267,8 @@ define(function (require) {
             }
             if (this.dataRangeOption.orient == 'horizontal') {
                 itemShape = {
-                    z : this._zlevelBase,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase(),
                     style : {
                         x : lastX,
                         y : lastY,
@@ -277,7 +285,8 @@ define(function (require) {
             }
             else {
                 itemShape = {
-                    z : this._zlevelBase,
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase(),
                     style : {
                         x : lastX,
                         y : lastY,
@@ -392,7 +401,8 @@ define(function (require) {
          */
         _buildFiller : function () {
             this._fillerShape = {
-                z : this._zlevelBase + 1,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase() + 1,
                 style : {
                     x : this._calculableLocation.x,
                     y : this._calculableLocation.y,
@@ -623,7 +633,8 @@ define(function (require) {
             };
             
             // 统一参数
-            this._startShape.z                   = this._endShape.z         = this._zlevelBase + 1;
+            this._startShape.zlevel              = this._endShape.zlevel    = this.getZlevelBase();
+            this._startShape.z                   = this._endShape.z         = this.getZBase() + 1;
             this._startShape.draggable           = this._endShape.draggable = true;
             this._startShape.ondrift             = this._endShape.ondrift   = this._ondrift;
             this._startShape.ondragend           = this._endShape.ondragend = this._ondragend;
@@ -650,7 +661,8 @@ define(function (require) {
             var width = this._calculableLocation.width;
             var height = this._calculableLocation.height;
             this._startMask = {
-                z : this._zlevelBase + 1,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase() + 1,
                 style : {
                     x : x,
                     y : y,
@@ -663,7 +675,8 @@ define(function (require) {
                 hoverable:false
             };
             this._endMask = {
-                z : this._zlevelBase + 1,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase() + 1,
                 style : {
                     x : this.dataRangeOption.orient == 'horizontal'
                         ? x + width : x,
@@ -687,7 +700,8 @@ define(function (require) {
             var padding = this.reformCssArray(this.dataRangeOption.padding);
             
             this.shapeList.push(new RectangleShape({
-                z : this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 hoverable :false,
                 style : {
                     x : this._itemGroupLocation.x - padding[3],
@@ -892,7 +906,8 @@ define(function (require) {
         // 指定文本
         _getTextShape : function (x, y, text) {
             return {
-                z : this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 style : {
                     x : (this.dataRangeOption.orient == 'horizontal'
                         ? x
@@ -919,7 +934,8 @@ define(function (require) {
         // 色尺legend item shape
         _getItemShape : function (x, y, width, height, color) {
             return {
-                z : this._zlevelBase,
+                zlevel: this.getZlevelBase(),
+                z: this.getZBase(),
                 style : {
                     x : x,
                     y : y + 1,
@@ -930,8 +946,7 @@ define(function (require) {
                 highlightStyle: {
                     strokeColor: color,
                     lineWidth : 1
-                },
-                clickable : true
+                }
             };
         },
         
@@ -1210,8 +1225,26 @@ define(function (require) {
 
 
         __dataRangeSelected : function (param) {
+            if (this.dataRangeOption.selectedMode === 'single') {
+                for (var k in this._selectedMap) {
+                    this._selectedMap[k] = false;
+                }
+            }
             var idx = param.target._idx;
             this._selectedMap[idx] = !this._selectedMap[idx];
+            var valueMax = (this._colorList.length - idx) * this._gap + this.dataRangeOption.min;
+            this.messageCenter.dispatch(
+                ecConfig.EVENT.DATA_RANGE_SELECTED,
+                param.event,
+                {
+                    selected: this._selectedMap,
+                    target: idx,
+                    valueMax: valueMax,
+                    valueMin: valueMax - this._gap
+                },
+                this.myChart
+            );
+
             this.messageCenter.dispatch(ecConfig.EVENT.REFRESH, null, null, this.myChart);
         },
         

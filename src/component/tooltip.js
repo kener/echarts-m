@@ -77,7 +77,8 @@ define(function (require) {
         
         this._axisLineShape && this.zr.delShape(this._axisLineShape.id);
         this._axisLineShape = new LineShape({
-            z: this._zlevelBase,
+            zlevel: this.getZlevelBase(),
+            z: this.getZBase(),
             invisible: true,
             hoverable: false
         });
@@ -86,6 +87,7 @@ define(function (require) {
         
         this._axisShadowShape && this.zr.delShape(this._axisShadowShape.id);
         this._axisShadowShape = new LineShape({
+            zlevel: this.getZlevelBase(),
             z: 1,                      // grid上，chart下
             invisible: true,
             hoverable: false
@@ -95,7 +97,8 @@ define(function (require) {
         
         this._axisCrossShape && this.zr.delShape(this._axisCrossShape.id);
         this._axisCrossShape = new CrossShape({
-            z: this._zlevelBase,
+            zlevel: this.getZlevelBase(),
+            z: this.getZBase(),
             invisible: true,
             hoverable: false
         });
@@ -638,9 +641,7 @@ define(function (require) {
                         var params = [];
                         for (var i = 0, l = seriesArray.length; i < l; i++) {
                             data = seriesArray[i].data[dataIndex];
-                            value = data != null
-                                    ? (data.value != null ? data.value : data)
-                                    : '-';
+                            value = this.getDataFromOption(data, '-');
                             
                             params.push({
                                 seriesIndex: seriesIndex[i],
@@ -677,11 +678,7 @@ define(function (require) {
                                 this._encodeHTML(categoryAxis.getNameByIndex(dataIndex))
                             );
                             data = seriesArray[i].data[dataIndex];
-                            data = data != null
-                                   ? (data.value != null
-                                       ? data.value
-                                       : data)
-                                   : '-';
+                            data = this.getDataFromOption(data, '-');
                             formatter = formatter.replace(
                                 '{c' + i + '}',
                                 data instanceof Array 
@@ -701,11 +698,7 @@ define(function (require) {
                                          + this._encodeHTML(seriesArray[i].name || '')
                                          + ' : ';
                             data = seriesArray[i].data[dataIndex];
-                            data = data != null
-                                   ? (data.value != null
-                                       ? data.value
-                                       : data)
-                                   : '-';
+                            data = this.getDataFromOption(data, '-');
                             formatter += data instanceof Array 
                                          ? data : this.numAddCommas(data);
                         }
@@ -792,8 +785,7 @@ define(function (require) {
                         data = data != null
                                ? data
                                : {name:'', value: {dataIndex:'-'}};
-                        value = data.value[dataIndex].value != null
-                                ? data.value[dataIndex].value : data.value[dataIndex];
+                        value = this.getDataFromOption(data.value[dataIndex]);
                         params.push({
                             seriesIndex: seriesIndex[i],
                             seriesName: seriesArray[i].name || '',
@@ -1333,7 +1325,9 @@ define(function (require) {
                     this.shapeList.length = 2;
                 }
                 for (var i = 0, l = tipShape.length; i < l; i++) {
-                    tipShape[i].z = this._zlevelBase;
+                    tipShape[i].zlevel = this.getZlevelBase();
+                    tipShape[i].z = this.getZBase();
+                    
                     tipShape[i].style = zrShapeBase.prototype.getHighlightStyle(
                         tipShape[i].style,
                         tipShape[i].highlightStyle

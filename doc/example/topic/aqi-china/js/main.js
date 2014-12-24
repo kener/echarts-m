@@ -211,6 +211,7 @@ function extMark() {
         //pos = map.geo2pos('china', cityGeo[city]);
         extShapeList.push(new lineShape({
             shape : 'line',
+            zlevel : 0,
             z : 5,
             style : {
                 xStart : pos[0],

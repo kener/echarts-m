@@ -8,7 +8,6 @@
 define(function (require) {
     'use strict';
     
-    var ComponentBase = require('../component/base');
     var ChartBase = require('./base');
 
     var Graph = require('../data/Graph');
@@ -35,10 +34,8 @@ define(function (require) {
      */
     function Force(ecTheme, messageCenter, zr, option, myChart) {
         var self = this;
-        // 基类
-        ComponentBase.call(this, ecTheme, messageCenter, zr, option, myChart);
         // 图表基类
-        ChartBase.call(this);
+        ChartBase.call(this, ecTheme, messageCenter, zr, option, myChart);
 
         // 保存节点的位置，改变数据时能够有更好的动画效果
         this.__nodePositionMap = {};
@@ -406,7 +403,8 @@ define(function (require) {
                             || this.deepQuery(emphasisStyleQueryTarget, 'borderWidth', 'emphasis')
                     },
                     clickable: serie.clickable,
-                    z: this.getZlevelBase()
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase()
                 });
                 if (!shape.style.color) {
                     shape.style.color = category 
@@ -425,7 +423,9 @@ define(function (require) {
                     shape = new ImageShape({
                         style: shape.style,
                         highlightStyle: shape.highlightStyle,
-                        clickable: shape.clickable
+                        clickable: shape.clickable,
+                        zlevel: this.getZlevelBase(),
+                        z: this.getZBase()
                     });
                 }
                 
@@ -502,7 +502,7 @@ define(function (require) {
                 var source = gEdge.node1;
                 var target = gEdge.node2;
 
-                var queryTarget = this._getEdgeQueryTarget(serie, gEdge);
+                var queryTarget = this._getEdgeQueryTarget(serie, link);
                 var linkType = this.deepQuery(queryTarget, 'type');
                 // TODO 暂时只有线段支持箭头
                 if (serie.linkSymbol && serie.linkSymbol !== 'none') {
@@ -515,12 +515,12 @@ define(function (require) {
                         xStart : 0,
                         yStart : 0,
                         xEnd : 0,
-                        yEnd : 0,
-                        lineWidth : 1
+                        yEnd : 0
                     },
                     clickable: this.query(serie, 'clickable'),
                     highlightStyle : {},
-                    z: this.getZlevelBase()
+                    zlevel: this.getZlevelBase(),
+                    z: this.getZBase()
                 });
 
                 zrUtil.merge(
@@ -843,7 +843,6 @@ define(function (require) {
     }
     
     zrUtil.inherits(Force, ChartBase);
-    zrUtil.inherits(Force, ComponentBase);
     
     // 图表注册
     require('../chart').define('force', Force);
