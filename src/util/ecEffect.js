@@ -192,10 +192,6 @@ define(function (require) {
         });
         offset = shadowBlur;
         
-        else {
-            offset = 0;
-        }
-        
         ecData.clone(shape, effectShape);
         
         // 改变坐标， 不能移到前面
