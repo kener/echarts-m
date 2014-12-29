@@ -13,8 +13,6 @@ define(function (require) {
     var IconShape = require('../util/shape/Icon');
     var SymbolShape = require('../util/shape/Symbol');
     
-    var canvasSupported = require('zrender/tool/env').canvasSupported;
-    
     function point(zr, effectList, shape, zlevel) {
         var effect = shape.effect;
         var color = effect.color || shape.style.strokeColor || shape.style.color;
@@ -45,20 +43,19 @@ define(function (require) {
             hoverable : false
         });
         
-        if (canvasSupported) {  // 提高性能，换成image
-            effectShape.style.image = zr.shapeToImage(
-                effectShape, 
-                effectShape.style.width + shadowBlur * 2 + 2, 
-                effectShape.style.height + shadowBlur * 2 + 2
-            ).style.image;
-            
-            effectShape = new ImageShape({
-                zlevel : effectShape.zlevel,
-                style : effectShape.style,
-                draggable : false,
-                hoverable : false
-            });
-        }
+        // 提高性能，换成image
+        effectShape.style.image = zr.shapeToImage(
+            effectShape, 
+            effectShape.style.width + shadowBlur * 2 + 2, 
+            effectShape.style.height + shadowBlur * 2 + 2
+        ).style.image;
+        
+        effectShape = new ImageShape({
+            zlevel : effectShape.zlevel,
+            style : effectShape.style,
+            draggable : false,
+            hoverable : false
+        });
         
         ecData.clone(shape, effectShape);
         
@@ -181,20 +178,20 @@ define(function (require) {
         });
         
         var offset;
-        if (canvasSupported) {  // 提高性能，换成image
-            effectShape.style.image = zr.shapeToImage(
-                effectShape, 
-                (size + shadowBlur) * 2,
-                (size + shadowBlur) * 2
-            ).style.image;
-            effectShape = new ImageShape({
-                zlevel : effectShape.zlevel,
-                style : effectShape.style,
-                draggable : false,
-                hoverable : false
-            });
-            offset = shadowBlur;
-        }
+        // 提高性能，换成image
+        effectShape.style.image = zr.shapeToImage(
+            effectShape, 
+            (size + shadowBlur) * 2,
+            (size + shadowBlur) * 2
+        ).style.image;
+        effectShape = new ImageShape({
+            zlevel : effectShape.zlevel,
+            style : effectShape.style,
+            draggable : false,
+            hoverable : false
+        });
+        offset = shadowBlur;
+        
         else {
             offset = 0;
         }

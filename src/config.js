@@ -244,7 +244,7 @@ define(function() {
 
         // 提示框
         tooltip: {
-            zlevel: 1,                  // 一级层叠，频繁变化的tooltip指示器在pc上独立一层
+            zlevel: 0,                  // 一级层叠，mobile中合一层
             z: 8,                       // 二级层叠
             show: true,
             showContent: true,         // tooltip主体内容
@@ -1344,7 +1344,6 @@ define(function() {
         textStyle: {
             decoration: 'none',
             fontFamily: 'Arial, Verdana, sans-serif',
-            fontFamily2: '微软雅黑',    // IE8- 字体模糊并且，不支持不同字体混排，额外指定一份
             fontSize: 12,
             fontStyle: 'normal',
             fontWeight: 'normal'

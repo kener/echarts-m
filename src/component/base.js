@@ -53,7 +53,6 @@ define(function (require) {
      * 基类方法
      */
     Base.prototype = {
-        canvasSupported: require('zrender/tool/env').canvasSupported,
         /**
          * 获取zlevel基数配置
          */

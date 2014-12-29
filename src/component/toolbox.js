@@ -137,9 +137,7 @@ define(function (require) {
                             iconName.push({ key: key, name: 'dataZoomReset' });
                             break;
                         case 'saveAsImage' :
-                            if (this.canvasSupported) {
-                                iconName.push({ key: key, name: 'saveAsImage' });
-                            }
+                            iconName.push({ key: key, name: 'saveAsImage' });
                             break;
                         default :
                             iconName.push({ key: key, name: key });

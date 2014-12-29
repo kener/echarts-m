@@ -49,10 +49,6 @@ define(function (require) {
         
         this.option.dataZoom = this.reformOption(this.option.dataZoom);
         this.zoomOption = this.option.dataZoom;
-        if (!this.myChart.canvasSupported) {
-            // 不支持Canvas的强制关闭实时动画
-            this.zoomOption.realtime = false;
-        }
 
         // 位置参数，通过计算所得x, y, width, height
         this._location = this._getLocation();
@@ -1143,10 +1139,6 @@ define(function (require) {
             this.option = magicOption;
             this.option.dataZoom = this.reformOption(this.option.dataZoom);
             this.zoomOption = this.option.dataZoom;
-            if (!this.myChart.canvasSupported) {
-                // 不支持Canvas的强制关闭实时动画
-                this.zoomOption.realtime = false;
-            }
             
             this.clear();
             // 位置参数，通过计算所得x, y, width, height

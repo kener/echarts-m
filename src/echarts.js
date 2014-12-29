@@ -1,5 +1,6 @@
 /*!
  * ECharts, a javascript interactive chart library.
+ * -m, special for mobile.
  *  
  * Copyright (c) 2014, Baidu Inc.
  * All rights reserved.
@@ -9,7 +10,7 @@
  */
 
 /**
- * echarts
+ * echarts-m
  *
  * @desc echarts基于Canvas，纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据统计图表。
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
@@ -22,25 +23,22 @@ define(function (require) {
     
     var self = {};
     
-    var _canvasSupported = require('zrender/tool/env').canvasSupported;
     var _idBase = new Date() - 0;
     var _instances = {};    // ECharts实例map索引
     var DOM_ATTRIBUTE_KEY = '_echarts_instance_';
     
-    self.version = '2.1.10';
+    self.version = '1.0.0';
     self.dependencies = {
-        zrender: '2.0.6'
+        zrender: '1.0.0'
     };
     /**
      * 入口方法 
      */
     self.init = function (dom, theme) {
         var zrender = require('zrender');
-        if (((zrender.version || '1.0.3').replace('.', '') - 0)
-            < (self.dependencies.zrender.replace('.', '') - 0)
-        ) {
+        if ((zrender.version.replace('.', '') - 0) < (self.dependencies.zrender.replace('.', '') - 0)) {
             console.error(
-                'ZRender ' + (zrender.version || '1.0.3-') 
+                'ZRender ' + zrender.version
                 + ' is too old for ECharts ' + self.version 
                 + '. Current version need ZRender ' 
                 + self.dependencies.zrender + '+'
@@ -62,7 +60,6 @@ define(function (require) {
         }
         _instances[key] = new Echarts(dom);
         _instances[key].id = key;
-        _instances[key].canvasSupported = _canvasSupported;
         _instances[key].setTheme(theme);
         
         return  _instances[key];
@@ -645,21 +642,7 @@ define(function (require) {
 
             var bgColor = magicOption.backgroundColor;
             if (bgColor) {
-                if (!_canvasSupported 
-                    && bgColor.indexOf('rgba') != -1
-                ) {
-                    // IE6~8对RGBA的处理，filter会带来其他颜色的影响
-                    var cList = bgColor.split(',');
-                    this.dom.style.filter = 'alpha(opacity=' +
-                        cList[3].substring(0, cList[3].lastIndexOf(')')) * 100
-                        + ')';
-                    cList.length = 3;
-                    cList[0] = cList[0].replace('a', '');
-                    this.dom.style.backgroundColor = cList.join(',') + ')';
-                }
-                else {
-                    this.dom.style.backgroundColor = bgColor;
-                }
+                this.dom.style.backgroundColor = bgColor;
             }
             
             this._zr.clearAnimation();
@@ -762,8 +745,7 @@ define(function (require) {
             
             var imgId = 'IMG' + this.id;
             var img = document.getElementById(imgId);
-            if (magicOption.renderAsImage && _canvasSupported) {
-                // IE8- 不支持图片渲染形式
+            if (magicOption.renderAsImage) {
                 if (img) {
                     // 已经渲染过则更新显示
                     img.src = this.getDataURL(magicOption.renderAsImage);
@@ -903,12 +885,6 @@ define(function (require) {
                 var zrColor = require('zrender/tool/color');
                 return zrColor.getColor(idx, themeColor);
             };
-            
-            if (!_canvasSupported) {
-                // 不支持Canvas的强制关闭动画
-                magicOption.animation = false;
-                magicOption.addDataAnimation = false;
-            }
         },
         
         /**
@@ -1308,10 +1284,6 @@ define(function (require) {
          * @return imgDataURL
          */
         getDataURL: function (imgType) {
-            if (!_canvasSupported) {
-                return '';
-            }
-
             if (this._chartList.length === 0) {
                 // 渲染为图片
                 var imgId = 'IMG' + this.id;
@@ -1633,10 +1605,6 @@ define(function (require) {
                 zrUtil.merge(this._themeConfig, zrUtil.clone(theme), true);
             }
             
-            if (!_canvasSupported) {   // IE8-
-                this._themeConfig.textStyle.fontFamily = this._themeConfig.textStyle.fontFamily2;
-            }
-            
             this._timeline && this._timeline.setTheme(true);
             this._optionRestore && this.restore();
         },
@@ -1649,7 +1617,7 @@ define(function (require) {
             return function(){
                 self._clearEffect();
                 self._zr.resize();
-                if (self._option && self._option.renderAsImage && _canvasSupported) {
+                if (self._option && self._option.renderAsImage) {
                     // 渲染为图片重走render模式
                     self._render(self._option);
                     return self;

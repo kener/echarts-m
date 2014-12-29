@@ -1314,7 +1314,7 @@ define(function (require) {
         },
         
         addShapeList: function () {
-            var maxLenth = this.option.animationThreshold / (this.canvasSupported ? 2 : 4);
+            var maxLenth = this.option.animationThreshold / 2;
             var lastShapeList = this.lastShapeList;
             var shapeList = this.shapeList;
             var duration = lastShapeList.length > 0
@@ -1504,15 +1504,14 @@ define(function (require) {
                 return;
             }
             var zlevel = ecConfig.EFFECT_ZLEVEL;
-            if (this.canvasSupported) {
-                this.zr.modLayer(
-                    zlevel,
-                    {
-                        motionBlur: true,
-                        lastFrameAlpha: 0.95
-                    }
-                );
-            }
+            this.zr.modLayer(
+                zlevel,
+                {
+                    motionBlur: true,
+                    lastFrameAlpha: 0.95
+                }
+            );
+
             var shape;
             for (var i = 0, l = shapeList.length; i < l; i++) {
                 shape = shapeList[i];

@@ -792,10 +792,6 @@ define(function (require) {
                 this.timelineOption.checkpointStyle.label.textStyle || {},
                 this.ecTheme.textStyle
             );
-            if (!this.myChart.canvasSupported) {
-                // 不支持Canvas的强制关闭实时动画
-                this.timelineOption.realtime = false;
-            }
             
             if (this.timelineOption.show && needRefresh) {
                 this.clear();

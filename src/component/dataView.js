@@ -258,7 +258,7 @@ define(function (require) {
                     );
                 },
                 // 有动画，所以高级浏览器时间更长点
-                self.canvasSupported ? 800 : 100
+                800
             );
         },
 
