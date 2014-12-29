@@ -545,6 +545,8 @@ define(function (require) {
                                               : nLabel.position;
                 tarShape.style.textColor = nTextStyle.color;
                 tarShape.style.textFont = this.getFont(nTextStyle);
+                tarShape.style.textAlign = nTextStyle.align;
+                tarShape.style.textBaseline = nTextStyle.baseline;
             }
             if (eLabel.show) {
                 tarShape.highlightStyle.text = this._getLabelText(
@@ -557,6 +559,8 @@ define(function (require) {
                         : eLabel.position);
                 tarShape.highlightStyle.textColor = eTextStyle.color;
                 tarShape.highlightStyle.textFont = this.getFont(eTextStyle);
+                tarShape.highlightStyle.textAlign = eTextStyle.align;
+                tarShape.highlightStyle.textBaseline = eTextStyle.baseline;
             }
             
             return tarShape;

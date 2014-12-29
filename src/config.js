@@ -1,5 +1,6 @@
 /**
  * echarts默认配置项
+ * -m special for mobile
  *
  * @desc echarts基于Canvas，纯Javascript图表库，提供直观，生动，可交互，可个性化定制的数据统计图表。
  * @author Kener (@Kener-林峰, kener.linfeng@gmail.com)
@@ -46,9 +47,7 @@ define(function() {
         
         // 默认色板
         color: ['#ff7f50','#87cefa','#da70d6','#32cd32','#6495ed',
-                '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
-                '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
-                '#6699FF','#ff6666','#3cb371','#b8860b','#30e0e0'],
+                '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0'],
 
         // 图表标题
         title: {
@@ -60,7 +59,7 @@ define(function() {
             subtext: '',
             // sublink: null,          // 超链接跳转
             // subtarget: null,        // 仅支持self | blank
-            x: 'left',                 // 水平安放位置，默认为左对齐，可选为：
+            x: 'center',                 // 水平安放位置，默认为左对齐，可选为：
                                        // 'center' ¦ 'left' ¦ 'right'
                                        // ¦ {number}（x坐标，单位px）
             y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
@@ -70,7 +69,7 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#ccc',       // 标题边框颜色
             borderWidth: 0,            // 标题边框线宽，单位px，默认为0（无边框）
-            padding: 5,                // 标题内边距，单位px，默认各方向内边距为5，
+            padding: 0,                // 标题内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
             itemGap: 5,                // 主副标题纵向间隔，单位px，默认为10，
             textStyle: {
@@ -93,19 +92,20 @@ define(function() {
             x: 'center',               // 水平安放位置，默认为全图居中，可选为：
                                        // 'center' ¦ 'left' ¦ 'right'
                                        // ¦ {number}（x坐标，单位px）
-            y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
+            y: '45',                  // 垂直安放位置，默认为全图顶端，可选为：
                                        // 'top' ¦ 'bottom' ¦ 'center'
                                        // ¦ {number}（y坐标，单位px）
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#ccc',       // 图例边框颜色
             borderWidth: 0,            // 图例边框线宽，单位px，默认为0（无边框）
-            padding: 5,                // 图例内边距，单位px，默认各方向内边距为5，
+            padding: 0,                // 图例内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
-            itemGap: 10,               // 各个item之间的间隔，单位px，默认为10，
+            itemGap: 10,               // 各个item之间的间隔，单位px，默认为15，
                                        // 横向布局时为水平间隔，纵向布局时为纵向间隔
-            itemWidth: 20,             // 图例图形宽度
-            itemHeight: 14,            // 图例图形高度
+            itemWidth: 18,             // 图例图形宽度
+            itemHeight: 18,            // 图例图形高度
             textStyle: {
+                fontSize: 18,
                 color: '#333'          // 图例文字颜色
             },
             selectedMode: true         // 选择模式，默认开启图例开关
@@ -129,12 +129,12 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#ccc',       // 值域边框颜色
             borderWidth: 0,            // 值域边框线宽，单位px，默认为0（无边框）
-            padding: 5,                // 值域内边距，单位px，默认各方向内边距为5，
+            padding: 0,                // 值域内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
-            itemGap: 10,               // 各个item之间的间隔，单位px，默认为10，
+            itemGap: 15,               // 各个item之间的间隔，单位px，默认为10，
                                        // 横向布局时为水平间隔，纵向布局时为纵向间隔
-            itemWidth: 20,             // 值域图形宽度，线性渐变水平布局宽度为该值 * 10
-            itemHeight: 14,            // 值域图形高度，线性渐变垂直布局高度为该值 * 10
+            itemWidth: 25,             // 值域图形宽度，线性渐变水平布局宽度为该值 * 10
+            itemHeight: 25,            // 值域图形高度，线性渐变垂直布局高度为该值 * 10
             // min: null,              // 最小值
             // max: null,              // 最大值
             precision: 0,              // 小数精度，默认为0，无小数点
@@ -147,6 +147,7 @@ define(function() {
             // formatter: null,
             // text:['高','低'],         // 文本，默认为数值文本
             textStyle: {
+                fontSize: 18,
                 color: '#333'          // 值域文字颜色
             }
         },
@@ -160,7 +161,7 @@ define(function() {
             x: 'right',                // 水平安放位置，默认为全图右对齐，可选为：
                                        // 'center' ¦ 'left' ¦ 'right'
                                        // ¦ {number}（x坐标，单位px）
-            y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
+            y: 'bottom',                  // 垂直安放位置，默认为全图顶端，可选为：
                                        // 'top' ¦ 'bottom' ¦ 'center'
                                        // ¦ {number}（y坐标，单位px）
             color: ['#1e90ff','#22bb22','#4b0082','#d2691e'],
@@ -169,27 +170,14 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)', // 工具箱背景颜色
             borderColor: '#ccc',       // 工具箱边框颜色
             borderWidth: 0,            // 工具箱边框线宽，单位px，默认为0（无边框）
-            padding: 5,                // 工具箱内边距，单位px，默认各方向内边距为5，
+            padding: 0,                // 工具箱内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
-            itemGap: 10,               // 各个item之间的间隔，单位px，默认为10，
+            itemGap: 20,               // 各个item之间的间隔，单位px，默认为10，
                                        // 横向布局时为水平间隔，纵向布局时为纵向间隔
-            itemSize: 16,              // 工具箱图形宽度
+            itemSize: 22,              // 工具箱图形宽度
             showTitle: true,
             // textStyle: {},
             feature: {
-                mark: {
-                    show: false,
-                    title: {
-                        mark: '辅助线开关',
-                        markUndo: '删除辅助线',
-                        markClear: '清空辅助线'
-                    },
-                    lineStyle: {
-                        width: 1,
-                        color: '#1e90ff',
-                        type: 'dashed'
-                    }
-                },
                 dataZoom: {
                     show: false,
                     title: {
@@ -232,12 +220,6 @@ define(function() {
                 restore: {
                     show: false,
                     title: '还原'
-                },
-                saveAsImage: {
-                    show: false,
-                    title: '保存为图片',
-                    type: 'png',
-                    lang: ['点击保存'] 
                 }
             }
         },
@@ -315,9 +297,9 @@ define(function() {
         grid: {
             zlevel: 0,                  // 一级层叠
             z: 0,                       // 二级层叠
-            x: 80,
-            y: 60,
-            x2: 80,
+            x: 5,
+            y: 80,
+            x2: 5,
             y2: 60,
             // width: {totalWidth} - x - x2,
             // height: {totalHeight} - y - y2,
@@ -400,7 +382,7 @@ define(function() {
             // scale: false,       // 脱离0值比例，放大聚焦到最终_min，_max区间
             //splitNumber: 5,        // 分割段数，默认为5
             axisLine: {            // 坐标轴线
-                show: true,        // 默认显示，属性show控制显示与否
+                show: false,        // 默认显示，属性show控制显示与否
                 onZero: true,
                 lineStyle: {       // 属性lineStyle控制线条样式
                     color: '#48b',
@@ -420,10 +402,12 @@ define(function() {
             axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
                 show: true,
                 rotate: 0,
-                margin: 8,
+                margin: -5,
                 // clickable: false,
                 // formatter: null,
                 textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+                    align: 'left',
+                    baseline: 'top',
                     color: '#333'
                 }
             },
@@ -506,7 +490,7 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',   // 时间轴背景颜色
             borderColor: '#ccc',               // 时间轴边框颜色
             borderWidth: 0,                    // 时间轴边框线宽，单位px，默认为0（无边框）
-            padding: 5,                        // 时间轴内边距，单位px，默认各方向内边距为5，
+            padding: 0,                        // 时间轴内边距，单位px，默认各方向内边距为5，
             controlPosition: 'left',           // 'right' | 'none'
             autoPlay: false,
             loop: true,
@@ -563,7 +547,7 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#ccc',       // 图例边框颜色
             borderWidth: 0,            // 图例边框线宽，单位px，默认为0（无边框）
-            padding: 5,                // 图例内边距，单位px，默认各方向内边距为5，
+            padding: 0,                // 图例内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
             handleColor: '#6495ed',
             fillerColor: '#fff',
@@ -1313,8 +1297,11 @@ define(function() {
                         // 标签文本格式器，同Tooltip.formatter，不支持回调
                         // formatter: null,
                         // 可选为 'start'|'end'|'left'|'right'|'top'|'bottom'
-                        position: 'end'
-                        // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
+                        position: 'end',
+                        textStyle: {
+                            align: 'right',
+                            baseline: 'bottom'
+                        }      // 默认使用全局文本样式，详见TEXTSTYLE
                     },
                     lineStyle: {
                         // color: 随borderColor, // 主色，线色，优先级高于borderColor和color

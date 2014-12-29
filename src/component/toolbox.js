@@ -57,15 +57,15 @@ define(function (require) {
         // this._dataView;
         this._markShapeList = [];
         var self = this;
-        self._onMark = function (param) {
-            self.__onMark(param);
-        };
-        self._onMarkUndo = function (param) {
-            self.__onMarkUndo(param);
-        };
-        self._onMarkClear = function (param) {
-            self.__onMarkClear(param);
-        };
+        // self._onMark = function (param) {
+        //     self.__onMark(param);
+        // };
+        // self._onMarkUndo = function (param) {
+        //     self.__onMarkUndo(param);
+        // };
+        // self._onMarkClear = function (param) {
+        //     self.__onMarkClear(param);
+        // };
         self._onDataZoom = function (param) {
             self.__onDataZoom(param);
         };
@@ -78,9 +78,9 @@ define(function (require) {
         self._onRestore = function (param) {
             self.__onRestore(param);
         };
-        self._onSaveAsImage = function (param) {
-            self.__onSaveAsImage(param);
-        };
+        // self._onSaveAsImage = function (param) {
+        //     self.__onSaveAsImage(param);
+        // };
         self._onMagicType = function (param) {
             self.__onMagicType(param);
         };
@@ -99,9 +99,9 @@ define(function (require) {
             return self.__onmouseup(param);
         };
         
-        self._onclick = function (param) {
-            return self.__onclick(param);
-        };
+        // self._onclick = function (param) {
+        //     return self.__onclick(param);
+        // };
     }
 
     Toolbox.prototype = {
@@ -117,9 +117,9 @@ define(function (require) {
                 if (feature[key].show) {
                     switch (key) {
                         case 'mark' :
-                            iconName.push({ key: key, name: 'mark' });
-                            iconName.push({ key: key, name: 'markUndo' });
-                            iconName.push({ key: key, name: 'markClear' });
+                            // iconName.push({ key: key, name: 'mark' });
+                            // iconName.push({ key: key, name: 'markUndo' });
+                            // iconName.push({ key: key, name: 'markClear' });
                             break;
                         case 'magicType' :
                             for (var i = 0, l = feature[key].type.length; i < l; i++) {
@@ -137,7 +137,7 @@ define(function (require) {
                             iconName.push({ key: key, name: 'dataZoomReset' });
                             break;
                         case 'saveAsImage' :
-                            iconName.push({ key: key, name: 'saveAsImage' });
+                            // iconName.push({ key: key, name: 'saveAsImage' });
                             break;
                         default :
                             iconName.push({ key: key, name: key });
@@ -172,10 +172,10 @@ define(function (require) {
                 for (var i = 0, l = this.shapeList.length; i < l; i++) {
                     this.zr.addShape(this.shapeList[i]);
                 }
-                if (this._iconShapeMap['mark']) {
-                    this._iconDisable(this._iconShapeMap['markUndo']);
-                    this._iconDisable(this._iconShapeMap['markClear']);
-                }
+                // if (this._iconShapeMap['mark']) {
+                //     this._iconDisable(this._iconShapeMap['markUndo']);
+                //     this._iconDisable(this._iconShapeMap['markClear']);
+                // }
                 if (this._iconShapeMap['dataZoomReset'] && this._zoomQueue.length === 0) {
                     this._iconDisable(this._iconShapeMap['dataZoomReset']);
                 }
@@ -280,15 +280,15 @@ define(function (require) {
                 }
                 
                 switch(this._iconList[i]) {
-                    case 'mark':
-                        itemShape.onclick = self._onMark;
-                        break;
-                    case 'markUndo':
-                        itemShape.onclick = self._onMarkUndo;
-                        break;
-                    case 'markClear':
-                        itemShape.onclick = self._onMarkClear;
-                        break;
+                    // case 'mark':
+                    //     itemShape.onclick = self._onMark;
+                    //     break;
+                    // case 'markUndo':
+                    //     itemShape.onclick = self._onMarkUndo;
+                    //     break;
+                    // case 'markClear':
+                    //     itemShape.onclick = self._onMarkClear;
+                    //     break;
                     case 'dataZoom':
                         itemShape.onclick = self._onDataZoom;
                         break;
@@ -307,9 +307,9 @@ define(function (require) {
                     case 'restore':
                         itemShape.onclick = self._onRestore;
                         break;
-                    case 'saveAsImage':
-                        itemShape.onclick = self._onSaveAsImage;
-                        break;
+                    // case 'saveAsImage':
+                    //     itemShape.onclick = self._onSaveAsImage;
+                    //     break;
                     default:
                         if (this._iconList[i].match('Chart')) {
                             itemShape._name = this._iconList[i].replace('Chart', '');
@@ -434,11 +434,11 @@ define(function (require) {
         },
 
         __onmousemove: function (param) {
-            if (this._marking) {
-                this._markShape.style.xEnd = zrEvent.getX(param.event);
-                this._markShape.style.yEnd = zrEvent.getY(param.event);
-                this.zr.addHoverShape(this._markShape);
-            }
+            // if (this._marking) {
+            //     this._markShape.style.xEnd = zrEvent.getX(param.event);
+            //     this._markShape.style.yEnd = zrEvent.getY(param.event);
+            //     this.zr.addHoverShape(this._markShape);
+            // }
             if (this._zooming) {
                 this._zoomShape.style.width = 
                     zrEvent.getX(param.event) - this._zoomShape.style.x;
@@ -446,6 +446,7 @@ define(function (require) {
                     zrEvent.getY(param.event) - this._zoomShape.style.y;
                 this.zr.addHoverShape(this._zoomShape);
                 this.dom.style.cursor = 'crosshair';
+                zrEvent.stop(param.event);
             }
             if (this._zoomStart
                 && (this.dom.style.cursor != 'pointer' && this.dom.style.cursor != 'move')
@@ -511,106 +512,106 @@ define(function (require) {
             return true; // 阻塞全局事件
         },
         
-        __onclick: function (param) {
-            if (param.target) {
-                return;
-            }
-            if (this._marking) {
-                this._marking = false;
-                this._markShapeList.push(this._markShape);
-                this._iconEnable(this._iconShapeMap['markUndo']);
-                this._iconEnable(this._iconShapeMap['markClear']);
-                this.zr.addShape(this._markShape);
-                this.zr.refresh();
-            } 
-            else if (this._markStart) {
-                this._marking = true;
-                var x = zrEvent.getX(param.event);
-                var y = zrEvent.getY(param.event);
-                this._markShape = new LineShape({
-                    zlevel: this.getZlevelBase(),
-                    z: this.getZBase(),
-                    style: {
-                        xStart: x,
-                        yStart: y,
-                        xEnd: x,
-                        yEnd: y,
-                        lineWidth: this.query(
-                                       this.option,
-                                       'toolbox.feature.mark.lineStyle.width'
-                                   ),
-                        strokeColor: this.query(
-                                         this.option,
-                                         'toolbox.feature.mark.lineStyle.color'
-                                     ),
-                        lineType: this.query(
-                                      this.option,
-                                      'toolbox.feature.mark.lineStyle.type'
-                                  )
-                    }
-                });
-                this.zr.addHoverShape(this._markShape);
-            }
-        },
+        // __onclick: function (param) {
+        //     if (param.target) {
+        //         return;
+        //     }
+        //     if (this._marking) {
+        //         this._marking = false;
+        //         this._markShapeList.push(this._markShape);
+        //         this._iconEnable(this._iconShapeMap['markUndo']);
+        //         this._iconEnable(this._iconShapeMap['markClear']);
+        //         this.zr.addShape(this._markShape);
+        //         this.zr.refresh();
+        //     } 
+        //     else if (this._markStart) {
+        //         this._marking = true;
+        //         var x = zrEvent.getX(param.event);
+        //         var y = zrEvent.getY(param.event);
+        //         this._markShape = new LineShape({
+        //             zlevel: this.getZlevelBase(),
+        //             z: this.getZBase(),
+        //             style: {
+        //                 xStart: x,
+        //                 yStart: y,
+        //                 xEnd: x,
+        //                 yEnd: y,
+        //                 lineWidth: this.query(
+        //                                this.option,
+        //                                'toolbox.feature.mark.lineStyle.width'
+        //                            ),
+        //                 strokeColor: this.query(
+        //                                  this.option,
+        //                                  'toolbox.feature.mark.lineStyle.color'
+        //                              ),
+        //                 lineType: this.query(
+        //                               this.option,
+        //                               'toolbox.feature.mark.lineStyle.type'
+        //                           )
+        //             }
+        //         });
+        //         this.zr.addHoverShape(this._markShape);
+        //     }
+        // },
         
-        __onMark: function (param) {
-            var target = param.target;
-            if (this._marking || this._markStart) {
-                // 取消
-                this._resetMark();
-                this.zr.refresh();
-            }
-            else {
-                // 启用Mark
-                this._resetZoom();   // mark与dataZoom互斥
+        // __onMark: function (param) {
+        //     var target = param.target;
+        //     if (this._marking || this._markStart) {
+        //         // 取消
+        //         this._resetMark();
+        //         this.zr.refresh();
+        //     }
+        //     else {
+        //         // 启用Mark
+        //         this._resetZoom();   // mark与dataZoom互斥
                 
-                this.zr.modShape(target.id, {style: {strokeColor: this._enableColor}});
-                this.zr.refresh();
-                this._markStart = true;
-                var self = this;
-                setTimeout(function (){
-                    self.zr
-                    && self.zr.on(zrConfig.EVENT.CLICK, self._onclick)
-                    && self.zr.on(zrConfig.EVENT.MOUSEMOVE, self._onmousemove);
-                }, 10);
-            }
-            return true; // 阻塞全局事件
-        },
+        //         this.zr.modShape(target.id, {style: {strokeColor: this._enableColor}});
+        //         this.zr.refresh();
+        //         this._markStart = true;
+        //         var self = this;
+        //         setTimeout(function (){
+        //             self.zr
+        //             && self.zr.on(zrConfig.EVENT.CLICK, self._onclick)
+        //             && self.zr.on(zrConfig.EVENT.MOUSEMOVE, self._onmousemove);
+        //         }, 10);
+        //     }
+        //     return true; // 阻塞全局事件
+        // },
         
-        __onMarkUndo: function () {
-            if (this._marking) {
-                this._marking = false;
-            } else {
-                var len = this._markShapeList.length;
-                if (len >= 1) {
-                    var target = this._markShapeList[len - 1];
-                    this.zr.delShape(target.id);
-                    this.zr.refresh();
-                    this._markShapeList.pop();
-                    if (len === 1) {
-                        this._iconDisable(this._iconShapeMap['markUndo']);
-                        this._iconDisable(this._iconShapeMap['markClear']);
-                    }
-                }
-            }
-            return true;
-        },
+        // __onMarkUndo: function () {
+        //     if (this._marking) {
+        //         this._marking = false;
+        //     } else {
+        //         var len = this._markShapeList.length;
+        //         if (len >= 1) {
+        //             var target = this._markShapeList[len - 1];
+        //             this.zr.delShape(target.id);
+        //             this.zr.refresh();
+        //             this._markShapeList.pop();
+        //             if (len === 1) {
+        //                 this._iconDisable(this._iconShapeMap['markUndo']);
+        //                 this._iconDisable(this._iconShapeMap['markClear']);
+        //             }
+        //         }
+        //     }
+        //     return true;
+        // },
 
-        __onMarkClear: function () {
-            if (this._marking) {
-                this._marking = false;
-            }
-            var len = this._markShapeList.length;
-            if (len > 0) {
-                while(len--) {
-                    this.zr.delShape(this._markShapeList.pop().id);
-                }
-                this._iconDisable(this._iconShapeMap['markUndo']);
-                this._iconDisable(this._iconShapeMap['markClear']);
-                this.zr.refresh();
-            }
-            return true;
-        },
+        // __onMarkClear: function () {
+        //     if (this._marking) {
+        //         this._marking = false;
+        //     }
+        //     var len = this._markShapeList.length;
+        //     if (len > 0) {
+        //         while(len--) {
+        //             this.zr.delShape(this._markShapeList.pop().id);
+        //         }
+        //         this._iconDisable(this._iconShapeMap['markUndo']);
+        //         this._iconDisable(this._iconShapeMap['markClear']);
+        //         this.zr.refresh();
+        //     }
+        //     return true;
+        // },
         
         __onDataZoom: function (param) {
             var target = param.target;
@@ -622,7 +623,7 @@ define(function (require) {
             }
             else {
                 // 启用Zoom
-                this._resetMark();   // mark与dataZoom互斥
+                // this._resetMark();   // mark与dataZoom互斥
                 
                 this.zr.modShape(target.id, {style: {strokeColor: this._enableColor}});
                 this.zr.refresh();
@@ -660,28 +661,28 @@ define(function (require) {
             return true;
         },
 
-        _resetMark: function () {
-            this._marking = false;
-            if (this._markStart) {
-                this._markStart = false;
-                if (this._iconShapeMap['mark']) {
-                    // 还原图标为未生效状态
-                    this.zr.modShape(
-                        this._iconShapeMap['mark'].id,
-                        {
-                            style: {
-                                strokeColor: this._iconShapeMap['mark']
-                                                 .highlightStyle
-                                                 .strokeColor
-                            }
-                         }
-                    );
-                }
+        // _resetMark: function () {
+        //     this._marking = false;
+        //     if (this._markStart) {
+        //         this._markStart = false;
+        //         if (this._iconShapeMap['mark']) {
+        //             // 还原图标为未生效状态
+        //             this.zr.modShape(
+        //                 this._iconShapeMap['mark'].id,
+        //                 {
+        //                     style: {
+        //                         strokeColor: this._iconShapeMap['mark']
+        //                                          .highlightStyle
+        //                                          .strokeColor
+        //                     }
+        //                  }
+        //             );
+        //         }
                 
-                this.zr.un(zrConfig.EVENT.CLICK, this._onclick);
-                this.zr.un(zrConfig.EVENT.MOUSEMOVE, this._onmousemove);
-            }
-        },
+        //         this.zr.un(zrConfig.EVENT.CLICK, this._onclick);
+        //         this.zr.un(zrConfig.EVENT.MOUSEMOVE, this._onmousemove);
+        //     }
+        // },
         
         _resetZoom: function () {
             this._zooming = false;
@@ -755,98 +756,98 @@ define(function (require) {
         },
 
         __onRestore: function (){
-            this._resetMark();
+            // this._resetMark();
             this._resetZoom();
             this.messageCenter.dispatch(ecConfig.EVENT.RESTORE, null, null, this.myChart);
             return true;
         },
         
-        __onSaveAsImage: function () {
-            var saveOption = this.option.toolbox.feature.saveAsImage;
-            var imgType = saveOption.type || 'png';
-            if (imgType != 'png' && imgType != 'jpeg') {
-                imgType = 'png';
-            }
+        // __onSaveAsImage: function () {
+        //     var saveOption = this.option.toolbox.feature.saveAsImage;
+        //     var imgType = saveOption.type || 'png';
+        //     if (imgType != 'png' && imgType != 'jpeg') {
+        //         imgType = 'png';
+        //     }
             
-            var image;
-            if (!this.myChart.isConnected()) {
-                image = this.zr.toDataURL(
-                    'image/' + imgType,
-                    this.option.backgroundColor 
-                    && this.option.backgroundColor.replace(' ','') === 'rgba(0,0,0,0)'
-                        ? '#fff' : this.option.backgroundColor
-                );
-            }
-            else {
-                image = this.myChart.getConnectedDataURL(imgType);
-            }
+        //     var image;
+        //     if (!this.myChart.isConnected()) {
+        //         image = this.zr.toDataURL(
+        //             'image/' + imgType,
+        //             this.option.backgroundColor 
+        //             && this.option.backgroundColor.replace(' ','') === 'rgba(0,0,0,0)'
+        //                 ? '#fff' : this.option.backgroundColor
+        //         );
+        //     }
+        //     else {
+        //         image = this.myChart.getConnectedDataURL(imgType);
+        //     }
              
-            var downloadDiv = document.createElement('div');
-            downloadDiv.id = '__echarts_download_wrap__';
-            downloadDiv.style.cssText = 'position:fixed;'
-                + 'z-index:99999;'
-                + 'display:block;'
-                + 'top:0;left:0;'
-                + 'background-color:rgba(33,33,33,0.5);'
-                + 'text-align:center;'
-                + 'width:100%;'
-                + 'height:100%;'
-                + 'line-height:' 
-                + document.documentElement.clientHeight + 'px;';
+        //     var downloadDiv = document.createElement('div');
+        //     downloadDiv.id = '__echarts_download_wrap__';
+        //     downloadDiv.style.cssText = 'position:fixed;'
+        //         + 'z-index:99999;'
+        //         + 'display:block;'
+        //         + 'top:0;left:0;'
+        //         + 'background-color:rgba(33,33,33,0.5);'
+        //         + 'text-align:center;'
+        //         + 'width:100%;'
+        //         + 'height:100%;'
+        //         + 'line-height:' 
+        //         + document.documentElement.clientHeight + 'px;';
                 
-            var downloadLink = document.createElement('a');
-            //downloadLink.onclick = _saveImageForIE;
-            downloadLink.href = image;
-            downloadLink.setAttribute(
-                'download',
-                (saveOption.name 
-                 ? saveOption.name 
-                 : (this.option.title && (this.option.title.text || this.option.title.subtext))
-                   ? (this.option.title.text || this.option.title.subtext)
-                   : 'ECharts')
-                + '.' + imgType 
-            );
-            downloadLink.innerHTML = '<img style="vertical-align:middle" src="' + image 
-                + '" title="'
-                + (!!(window.attachEvent 
-                     && navigator.userAgent.indexOf('Opera') === -1)
-                  ? '右键->图片另存为'
-                  : (saveOption.lang ? saveOption.lang[0] : '点击保存'))
-                + '"/>';
+        //     var downloadLink = document.createElement('a');
+        //     //downloadLink.onclick = _saveImageForIE;
+        //     downloadLink.href = image;
+        //     downloadLink.setAttribute(
+        //         'download',
+        //         (saveOption.name 
+        //          ? saveOption.name 
+        //          : (this.option.title && (this.option.title.text || this.option.title.subtext))
+        //            ? (this.option.title.text || this.option.title.subtext)
+        //            : 'ECharts')
+        //         + '.' + imgType 
+        //     );
+        //     downloadLink.innerHTML = '<img style="vertical-align:middle" src="' + image 
+        //         + '" title="'
+        //         + (!!(window.attachEvent 
+        //              && navigator.userAgent.indexOf('Opera') === -1)
+        //           ? '右键->图片另存为'
+        //           : (saveOption.lang ? saveOption.lang[0] : '点击保存'))
+        //         + '"/>';
             
-            downloadDiv.appendChild(downloadLink);
-            document.body.appendChild(downloadDiv);
-            downloadLink = null;
-            downloadDiv = null;
+        //     downloadDiv.appendChild(downloadLink);
+        //     document.body.appendChild(downloadDiv);
+        //     downloadLink = null;
+        //     downloadDiv = null;
             
-            setTimeout(function (){
-                var _d = document.getElementById('__echarts_download_wrap__');
-                if (_d) {
-                    _d.onclick = function () {
-                        var d = document.getElementById(
-                            '__echarts_download_wrap__'
-                        );
-                        d.onclick = null;
-                        d.innerHTML = '';
-                        document.body.removeChild(d);
-                        d = null;
-                    };
-                    _d = null;
-                }
-            }, 500);
+        //     setTimeout(function (){
+        //         var _d = document.getElementById('__echarts_download_wrap__');
+        //         if (_d) {
+        //             _d.onclick = function () {
+        //                 var d = document.getElementById(
+        //                     '__echarts_download_wrap__'
+        //                 );
+        //                 d.onclick = null;
+        //                 d.innerHTML = '';
+        //                 document.body.removeChild(d);
+        //                 d = null;
+        //             };
+        //             _d = null;
+        //         }
+        //     }, 500);
             
-            /*
-            function _saveImageForIE() {
-                window.win = window.open(image);
-                win.document.execCommand("SaveAs");
-                win.close()
-            }
-            */
-            return;
-        },
+        //     /*
+        //     function _saveImageForIE() {
+        //         window.win = window.open(image);
+        //         win.document.execCommand("SaveAs");
+        //         win.close()
+        //     }
+        //     */
+        //     return;
+        // },
 
         __onMagicType: function (param) {
-            this._resetMark();
+            // this._resetMark();
             var itemName = param.target._name;
             if (!this._magicType[itemName]) {
                 // 启用
@@ -891,7 +892,7 @@ define(function (require) {
         },
         
         setMagicType: function (magicType) {
-            this._resetMark();
+            // this._resetMark();
             this._magicType = magicType;
             
             !this._isSilence && this.messageCenter.dispatch(
@@ -1082,7 +1083,7 @@ define(function (require) {
         },
         
         resize: function () {
-            this._resetMark();
+            // this._resetMark();
             this.clear();
             if (this.option && this.option.toolbox && this.option.toolbox.show) {
                this._buildShape();
@@ -1126,7 +1127,7 @@ define(function (require) {
          */
         refresh: function (newOption) {
             if (newOption) {
-                this._resetMark();
+                // this._resetMark();
                 this._resetZoom();
                 
                 newOption.toolbox = this.reformOption(newOption.toolbox);
