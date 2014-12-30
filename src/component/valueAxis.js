@@ -216,12 +216,11 @@ define(function (require) {
                             textFont: this.getFont(textStyle),
                             textAlign: textStyle.align || align,
                             textBaseline: textStyle.baseline 
-                                          || (i === 0 && this.option.name !== '')
-                                              ? 'bottom'
-                                              : (i === (dataLength - 1) 
-                                                 && this.option.name !== '')
-                                                ? 'top'
-                                                : 'middle'
+                                          || (
+                                              (i === 0 && this.option.name !== '')
+                                                ? 'bottom'
+                                                : (i === dataLength - 1 && this.option.name !== '') ? 'top' : 'middle'
+                                          )
                         }
                     };
                     

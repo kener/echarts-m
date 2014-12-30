@@ -43,7 +43,7 @@ define(function (require) {
         self._onglobalout = function (param) {
             return self.__onglobalout(param);
         };
-        
+        this.zr.on(zrConfig.EVENT.CLICK, self._onmousemove);
         this.zr.on(zrConfig.EVENT.MOUSEMOVE, self._onmousemove);
         this.zr.on(zrConfig.EVENT.GLOBALOUT, self._onglobalout);
 
@@ -1007,13 +1007,22 @@ define(function (require) {
                 }
             }
 
-            if (!this._axisLineShape.invisible || !this._axisShadowShape.invisible) {
-                this._axisLineShape.invisible = true;
-                this.zr.modShape(this._axisLineShape.id);
-                this._axisShadowShape.invisible = true;
-                this.zr.modShape(this._axisShadowShape.id);
-                this.zr.refresh();
-            }
+            // if (!this._axisLineShape.invisible || !this._axisShadowShape.invisible || !this._axisCrossShape.invisible) {
+                // this._axisLineShape.invisible = true;
+                // this.zr.modShape(this._axisLineShape.id);
+                // this._axisShadowShape.invisible = true;
+                // this.zr.modShape(this._axisShadowShape.id);
+                // this.zr.refresh();
+            // }
+            var x = zrEvent.getX(this._event);
+            var y = zrEvent.getY(this._event);
+            this._styleAxisPointer(
+                [serie],
+                this.component.grid.getX(), y, 
+                this.component.grid.getXend(), y,
+                0, x, y
+            );
+
             
             // don't modify, just false, showContent == undefined == true
             if (showContent === false || !this.option.tooltip.showContent) {
@@ -1682,6 +1691,7 @@ define(function (require) {
             }
             clearTimeout(this._hidingTicket);
             clearTimeout(this._showingTicket);
+            this.zr.un(zrConfig.EVENT.CLICK, this._onmousemove);
             this.zr.un(zrConfig.EVENT.MOUSEMOVE, this._onmousemove);
             this.zr.un(zrConfig.EVENT.GLOBALOUT, this._onglobalout);
             

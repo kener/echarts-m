@@ -69,7 +69,7 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#ccc',       // 标题边框颜色
             borderWidth: 0,            // 标题边框线宽，单位px，默认为0（无边框）
-            padding: 0,                // 标题内边距，单位px，默认各方向内边距为5，
+            padding: 1,                // 标题内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
             itemGap: 5,                // 主副标题纵向间隔，单位px，默认为10，
             textStyle: {
@@ -98,7 +98,7 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#ccc',       // 图例边框颜色
             borderWidth: 0,            // 图例边框线宽，单位px，默认为0（无边框）
-            padding: 0,                // 图例内边距，单位px，默认各方向内边距为5，
+            padding: 1,                // 图例内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
             itemGap: 10,               // 各个item之间的间隔，单位px，默认为15，
                                        // 横向布局时为水平间隔，纵向布局时为纵向间隔
@@ -129,7 +129,7 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#ccc',       // 值域边框颜色
             borderWidth: 0,            // 值域边框线宽，单位px，默认为0（无边框）
-            padding: 0,                // 值域内边距，单位px，默认各方向内边距为5，
+            padding: 1,                // 值域内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
             itemGap: 15,               // 各个item之间的间隔，单位px，默认为10，
                                        // 横向布局时为水平间隔，纵向布局时为纵向间隔
@@ -170,11 +170,11 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)', // 工具箱背景颜色
             borderColor: '#ccc',       // 工具箱边框颜色
             borderWidth: 0,            // 工具箱边框线宽，单位px，默认为0（无边框）
-            padding: 0,                // 工具箱内边距，单位px，默认各方向内边距为5，
+            padding: 1,                // 工具箱内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
-            itemGap: 20,               // 各个item之间的间隔，单位px，默认为10，
+            itemGap: 18,               // 各个item之间的间隔，单位px，默认为10，
                                        // 横向布局时为水平间隔，纵向布局时为纵向间隔
-            itemSize: 22,              // 工具箱图形宽度
+            itemSize: 24,              // 工具箱图形宽度
             showTitle: true,
             // textStyle: {},
             feature: {
@@ -234,8 +234,8 @@ define(function() {
             // position: null          // 位置 {Array} | {Function}
             // formatter: null         // 内容格式器：{string}（Template） ¦ {Function}
             islandFormatter: '{a} <br/>{b} : {c}',  // 数据孤岛内容格式器
-            showDelay: 20,             // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
-            hideDelay: 100,            // 隐藏延迟，单位ms
+            showDelay: 0,              // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
+            hideDelay: 200,            // 隐藏延迟，单位ms
             transitionDuration: 0.4,   // 动画变换时间，单位s
             enterable: false,
             backgroundColor: 'rgba(0,0,0,0.7)',     // 提示背景颜色，默认为透明度为0.7的黑色
@@ -261,6 +261,8 @@ define(function() {
                     width: 'auto',                  // 阴影大小
                     type: 'default'
                 }
+
+
             },
             textStyle: {
                 color: '#fff'
@@ -284,12 +286,13 @@ define(function() {
             dataBackgroundColor: '#eee',            // 数据背景颜色
             fillerColor: 'rgba(144,197,237,0.2)',   // 填充颜色
             handleColor: 'rgba(70,130,180,0.8)',    // 手柄颜色
+            handleSize: 20,
             showDetail: true,
             // xAxisIndex: [],         // 默认控制所有横向类目
             // yAxisIndex: [],         // 默认控制所有横向类目
             // start: 0,               // 默认为0
             // end: 100,               // 默认为全部 100%
-            realtime: true
+            realtime: false
             // zoomLock: false         // 是否锁定选择区域大小
         },
 
@@ -297,14 +300,14 @@ define(function() {
         grid: {
             zlevel: 0,                  // 一级层叠
             z: 0,                       // 二级层叠
-            x: 5,
+            x: 12,
             y: 80,
-            x2: 5,
+            x2: 12,
             y2: 60,
             // width: {totalWidth} - x - x2,
             // height: {totalHeight} - y - y2,
             backgroundColor: 'rgba(0,0,0,0)',
-            borderWidth: 1,
+            borderWidth: 0,
             borderColor: '#ccc'
         },
 
@@ -350,7 +353,7 @@ define(function() {
                 }
             },
             splitLine: {           // 分隔线
-                show: true,        // 默认显示，属性show控制显示与否
+                show: false,        // 默认显示，属性show控制显示与否
                 // onGap: null,
                 lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
                     color: ['#ccc'],
@@ -402,12 +405,12 @@ define(function() {
             axisLabel: {           // 坐标轴文本标签，详见axis.axisLabel
                 show: true,
                 rotate: 0,
-                margin: -5,
+                margin: -1,
                 // clickable: false,
                 // formatter: null,
                 textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                     align: 'left',
-                    baseline: 'top',
+                    baseline: 'bottom',
                     color: '#333'
                 }
             },
@@ -490,7 +493,7 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',   // 时间轴背景颜色
             borderColor: '#ccc',               // 时间轴边框颜色
             borderWidth: 0,                    // 时间轴边框线宽，单位px，默认为0（无边框）
-            padding: 0,                        // 时间轴内边距，单位px，默认各方向内边距为5，
+            padding: 1,                        // 时间轴内边距，单位px，默认各方向内边距为5，
             controlPosition: 'left',           // 'right' | 'none'
             autoPlay: false,
             loop: true,
@@ -547,7 +550,7 @@ define(function() {
             backgroundColor: 'rgba(0,0,0,0)',
             borderColor: '#ccc',       // 图例边框颜色
             borderWidth: 0,            // 图例边框线宽，单位px，默认为0（无边框）
-            padding: 0,                // 图例内边距，单位px，默认各方向内边距为5，
+            padding: 1,                // 图例内边距，单位px，默认各方向内边距为5，
                                        // 接受数组分别设定上右下左边距，同css
             handleColor: '#6495ed',
             fillerColor: '#fff',
@@ -618,7 +621,7 @@ define(function() {
                         // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
                     },
                     lineStyle: {
-                        width: 2,
+                        width: 1.5,
                         type: 'solid',
                         shadowColor: 'rgba(0,0,0,0)', //默认透明
                         shadowBlur: 0,
@@ -1273,11 +1276,12 @@ define(function() {
             // 标线起始和结束的symbol介绍类型，如果都一样，可以直接传string
             symbol: ['circle', 'arrow'],  
             // 标线起始和结束的symbol大小，半宽（半径）参数，当图形为方向或菱形则总宽度为symbolSize * 2
-            symbolSize: [2, 4],
+            symbolSize: [2, 2],
             // 标线起始和结束的symbol旋转控制
             //symbolRotate: null,
             //smooth: false,
             large: false,
+            precision: 2,
             effect: {
                 show: false,
                 loop: true,
@@ -1316,11 +1320,14 @@ define(function() {
                 emphasis: {
                     // color: 各异
                     label: {
-                        show: false
+                        show: false,
                         // 标签文本格式器，同Tooltip.formatter，不支持回调
                         // formatter: null,
                         // position: 'inside' // 'left'|'right'|'top'|'bottom'
-                        // textStyle: null    // 默认使用全局文本样式，详见TEXTSTYLE
+                        textStyle: {
+                            align: 'right',
+                            baseline: 'bottom'
+                        } 
                     },
                     lineStyle: {}
                 }
@@ -1371,8 +1378,8 @@ define(function() {
         EFFECT_ZLEVEL : 10,       // 特效动画zlevel
         // 主题，默认标志图形类型列表
         symbolList: [
-          'circle', 'rectangle', 'triangle', 'diamond',
-          'emptyCircle', 'emptyRectangle', 'emptyTriangle', 'emptyDiamond'
+          'emptyCircle', 'emptyRectangle', 'emptyTriangle', 'emptyDiamond',
+          'circle', 'rectangle', 'triangle', 'diamond'
         ],
         loadingEffect: 'spin',
         loadingText: 'Loading...',
