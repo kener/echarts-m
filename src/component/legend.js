@@ -841,12 +841,12 @@ define(function (require) {
             var width = style.width;
             var height = style.height;
             SectorShape.prototype.buildPath(ctx, {
-                x: x + width / 2,
-                y: y + height + 2,
-                r: height + 2,
+                x: x + width,
+                y: y + height,
+                r: height,
                 r0: 6,
-                startAngle: 45,
-                endAngle: 135
+                startAngle: 90,
+                endAngle: 180
             });
         },
         

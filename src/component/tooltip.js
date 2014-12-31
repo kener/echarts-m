@@ -1014,15 +1014,20 @@ define(function (require) {
                 // this.zr.modShape(this._axisShadowShape.id);
                 // this.zr.refresh();
             // }
-            var x = zrEvent.getX(this._event);
-            var y = zrEvent.getY(this._event);
-            this._styleAxisPointer(
-                [serie],
-                this.component.grid.getX(), y, 
-                this.component.grid.getXend(), y,
-                0, x, y
-            );
-
+            if (serie.type == ecConfig.CHART_TYPE_LINE
+                || serie.type == ecConfig.CHART_TYPE_BAR
+                || serie.type == ecConfig.CHART_TYPE_SCATTER
+                || serie.type == ecConfig.CHART_TYPE_K
+            ) {
+                var x = zrEvent.getX(this._event);
+                var y = zrEvent.getY(this._event);
+                this._styleAxisPointer(
+                    [serie],
+                    this.component.grid.getX(), y, 
+                    this.component.grid.getXend(), y,
+                    0, x, y
+                );
+            }
             
             // don't modify, just false, showContent == undefined == true
             if (showContent === false || !this.option.tooltip.showContent) {
@@ -1118,25 +1123,25 @@ define(function (require) {
                     style[pType].type = axisPointer[pType + 'Style'].type;
                 }
                 for (var i = 0, l = seriesArray.length; i < l; i++) {
-                    if (this.deepQuery([seriesArray[i], this.option], 'tooltip.trigger') === 'axis') {
-                        queryTarget = seriesArray[i];
-                        curType = this.query(queryTarget, 'tooltip.axisPointer.type');
-                        pointType = curType || pointType; 
-                        if (curType) {
-                            style[curType].color = this.query(
-                                queryTarget,
-                                'tooltip.axisPointer.' + curType + 'Style.color'
-                            ) || style[curType].color;
-                            style[curType].width = this.query(
-                                queryTarget,
-                                'tooltip.axisPointer.' + curType + 'Style.width'
-                            ) || style[curType].width;
-                            style[curType].type = this.query(
-                                queryTarget,
-                                'tooltip.axisPointer.' + curType + 'Style.type'
-                            ) || style[curType].type;
-                        }
+                    // if (this.deepQuery([seriesArray[i], this.option], 'tooltip.trigger') === 'axis') {
+                    queryTarget = seriesArray[i];
+                    curType = this.query(queryTarget, 'tooltip.axisPointer.type');
+                    pointType = curType || pointType; 
+                    if (curType) {
+                        style[curType].color = this.query(
+                            queryTarget,
+                            'tooltip.axisPointer.' + curType + 'Style.color'
+                        ) || style[curType].color;
+                        style[curType].width = this.query(
+                            queryTarget,
+                            'tooltip.axisPointer.' + curType + 'Style.width'
+                        ) || style[curType].width;
+                        style[curType].type = this.query(
+                            queryTarget,
+                            'tooltip.axisPointer.' + curType + 'Style.type'
+                        ) || style[curType].type;
                     }
+                    // }
                 }
                 
                 if (pointType === 'line') {

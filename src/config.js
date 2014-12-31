@@ -484,9 +484,9 @@ define(function() {
             type: 'time',  // 模式是时间类型，支持 number
             notMerge: false,
             realtime: true,
-            x: 80,
+            x: 1,
             // y: {number},
-            x2: 80,
+            x2: 2,
             y2: 0,
             // width: {totalWidth} - x - x2,
             height: 50,
@@ -519,13 +519,15 @@ define(function() {
                 borderColor: 'auto',
                 borderWidth: 'auto',
                 label: {                            // 文本标签
-                    show: false,
+                    show: true,
                     textStyle: {                    // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                         color: 'auto'
                     }
                 }
             },
             controlStyle: {
+                itemSize: 22,
+                itemGap: 8,
                 normal: { color: '#333'},
                 emphasis: { color: '#1e90ff'}
             },
@@ -764,7 +766,7 @@ define(function() {
             clickable: true,
             legendHoverLink: true,
             center: ['50%', '50%'],     // 默认全局居中
-            radius: [0, '75%'],
+            radius: [0, '55%'],
             clockWise: true,            // 默认顺时针
             startAngle: 90,
             minAngle: 0,                // 最小角度改为0
@@ -784,7 +786,7 @@ define(function() {
                     },
                     labelLine: {
                         show: true,
-                        length: 20,
+                        length: 10,
                         lineStyle: {
                             // color: 各异,
                             width: 1,
@@ -804,7 +806,7 @@ define(function() {
                     },
                     labelLine: {
                         show: false,
-                        length: 20,
+                        length: 10,
                         lineStyle: {
                             // color: 各异,
                             width: 1,
@@ -874,7 +876,7 @@ define(function() {
             center: ['50%', '50%'],
 
             // 布局大小
-            size: '100%',
+            size: '80%',
 
             // 防止节点和节点，节点和边之间的重叠
             preventOverlap: false,
@@ -903,7 +905,7 @@ define(function() {
             scaling: 1.0,
 
             // 向心力因子，越大向心力越大（ 所有顶点会往 center 的位置收拢 )
-            gravity: 1,
+            gravity: 1.2,
 
             symbol: 'circle',
             // symbolSize 为 0 的话使用映射到minRadius-maxRadius后的值
@@ -980,7 +982,7 @@ define(function() {
             zlevel: 0,                  // 一级层叠
             z: 2,                       // 二级层叠
             clickable: true,
-            radius: ['65%', '75%'],
+            radius: ['60%', '70%'],
             center: ['50%', '50%'],
             padding: 2,
             sort: 'none',       // can be 'none', 'ascending', 'descending'
@@ -1072,7 +1074,7 @@ define(function() {
             z: 2,                       // 二级层叠
             center: ['50%', '50%'],    // 默认全局居中
             legendHoverLink: true,
-            radius: '75%',
+            radius: '80%',
             startAngle: 225,
             endAngle: -45,
             min: 0,                     // 最小值
@@ -1083,7 +1085,7 @@ define(function() {
                 show: true,        // 默认显示，属性show控制显示与否
                 lineStyle: {       // 属性lineStyle控制线条样式
                     color: [[0.2, '#228b22'],[0.8, '#48b'],[1, '#ff4500']], 
-                    width: 30
+                    width: 20
                 }
             },
             axisTick: {            // 坐标轴小标记
@@ -1105,7 +1107,7 @@ define(function() {
             },
             splitLine: {           // 分隔线
                 show: true,        // 默认显示，属性show控制显示与否
-                length :30,         // 属性length控制线长
+                length :20,         // 属性length控制线长
                 lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
                     color: '#eee',
                     width: 2,
@@ -1120,7 +1122,7 @@ define(function() {
             },
             title: {
                 show: true,
-                offsetCenter: [0, '-40%'],      // x, y，单位px
+                offsetCenter: [0, '-35%'],      // x, y，单位px
                 textStyle: {                    // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                     color: '#333',
                     fontSize: 15
@@ -1133,7 +1135,7 @@ define(function() {
                 borderColor: '#ccc',
                 width: 100,
                 height: 40,
-                offsetCenter: [0, '40%'],   // x, y，单位px
+                offsetCenter: [0, '50%'],   // x, y，单位px
                 // formatter: null,
                 textStyle: {                // 其余属性默认使用全局文本样式，详见TEXTSTYLE
                     color: 'auto',
@@ -1147,9 +1149,9 @@ define(function() {
             z: 2,                       // 二级层叠
             clickable: true,
             legendHoverLink: true,
-            x: 80,
-            y: 60,
-            x2: 80,
+            x: 10,
+            y: 80,
+            x2: 10,
             y2: 60,
             // width: {totalWidth} - x - x2,
             // height: {totalHeight} - y - y2,
