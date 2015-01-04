@@ -2,7 +2,7 @@
  * ECharts, a javascript interactive chart library.
  * -m, special for mobile.
  *  
- * Copyright (c) 2014, Baidu Inc.
+ * Copyright (c) 2015, Baidu Inc.
  * All rights reserved.
  * 
  * LICENSE

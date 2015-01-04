@@ -73,7 +73,7 @@ define(function() {
                                        // 接受数组分别设定上右下左边距，同css
             itemGap: 5,                // 主副标题纵向间隔，单位px，默认为10，
             textStyle: {
-                fontSize: 18,
+                fontSize: 20,
                 fontWeight: 'bolder',
                 color: '#333'          // 主标题文字颜色
             },
