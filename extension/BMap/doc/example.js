@@ -25,7 +25,9 @@
         });
 
         // 初始化地图
-        var BMapExt = new BMapExtension($('#main')[0], BMap, echarts);
+        var BMapExt = new BMapExtension($('#main')[0], BMap, echarts,{
+            enableMapClick: false
+        });
         var map = BMapExt.getMap();
         var container = BMapExt.getEchartsContainer();
 
