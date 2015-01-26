@@ -38,9 +38,9 @@ define(function (require) {
         self._legendSelected = function (param) {
             self.__legendSelected(param);
         };
-        self._dispatchHoverLink = function(param) {
-            return self.__dispatchHoverLink(param);
-        };
+        // self._dispatchHoverLink = function(param) {
+        //     return self.__dispatchHoverLink(param);
+        // };
         
         this._colorIndex = 0;
         this._colorMap = {};
@@ -592,17 +592,17 @@ define(function (require) {
         /**
          * 产生hover link事件 
          */
-        __dispatchHoverLink : function(param) {
-            this.messageCenter.dispatch(
-                ecConfig.EVENT.LEGEND_HOVERLINK,
-                param.event,
-                {
-                    target: param.target._name
-                },
-                this.myChart
-            );
-            return;
-        },
+        // __dispatchHoverLink : function(param) {
+        //     this.messageCenter.dispatch(
+        //         ecConfig.EVENT.LEGEND_HOVERLINK,
+        //         param.event,
+        //         {
+        //             target: param.target._name
+        //         },
+        //         this.myChart
+        //     );
+        //     return;
+        // },
         
         /**
          * 刷新

@@ -27,26 +27,26 @@ define(function (require) {
         this.shapeList = [];
         this.effectList = [];
         
-        var self = this;
+        // var self = this;
         
-        self._onlegendhoverlink = function(param) {
-            if (self.legendHoverLink) {
-                var targetName = param.target;
-                var name;
-                for (var i = self.shapeList.length - 1; i >= 0; i--) {
-                    name = self.type == ecConfig.CHART_TYPE_PIE
-                           || self.type == ecConfig.CHART_TYPE_FUNNEL
-                           ? ecData.get(self.shapeList[i], 'name')
-                           : (ecData.get(self.shapeList[i], 'series') || {}).name;
-                    if (name == targetName && !self.shapeList[i].invisible) {
-                        self.zr.addHoverShape(self.shapeList[i]);
-                    }
-                }
-            }
-        };
-        messageCenter && messageCenter.bind(
-            ecConfig.EVENT.LEGEND_HOVERLINK, this._onlegendhoverlink
-        );
+        // self._onlegendhoverlink = function(param) {
+        //     if (self.legendHoverLink) {
+        //         var targetName = param.target;
+        //         var name;
+        //         for (var i = self.shapeList.length - 1; i >= 0; i--) {
+        //             name = self.type == ecConfig.CHART_TYPE_PIE
+        //                    || self.type == ecConfig.CHART_TYPE_FUNNEL
+        //                    ? ecData.get(self.shapeList[i], 'name')
+        //                    : (ecData.get(self.shapeList[i], 'series') || {}).name;
+        //             if (name == targetName && !self.shapeList[i].invisible) {
+        //                 self.zr.addHoverShape(self.shapeList[i]);
+        //             }
+        //         }
+        //     }
+        // };
+        // messageCenter && messageCenter.bind(
+        //     ecConfig.EVENT.LEGEND_HOVERLINK, this._onlegendhoverlink
+        // );
     }
 
     /**
@@ -234,9 +234,9 @@ define(function (require) {
             this.clear();
             this.shapeList = null;
             this.effectList = null;
-            this.messageCenter && this.messageCenter.unbind(
-                ecConfig.EVENT.LEGEND_HOVERLINK, this._onlegendhoverlink
-            );
+            // this.messageCenter && this.messageCenter.unbind(
+            //     ecConfig.EVENT.LEGEND_HOVERLINK, this._onlegendhoverlink
+            // );
             this.onafterDispose && this.onafterDispose();
         },
         
