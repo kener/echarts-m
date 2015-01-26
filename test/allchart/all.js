@@ -118,7 +118,7 @@ if (developMode) {
                     {
                         name: 'zrender',
                         //location: 'http://ecomfe.github.io/zrender/src',
-                        location: '../../../zrender/src',
+                        location: '../../../zrender-m/src',
                         main: 'zrender'
                     }
                 ]
