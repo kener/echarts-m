@@ -72,9 +72,9 @@ define(function (require) {
         self._onDataZoomReset = function (param) {
             self.__onDataZoomReset(param);
         };
-        self._onDataView = function (param) {
-            self.__onDataView(param);
-        };
+        // self._onDataView = function (param) {
+        //     self.__onDataView(param);
+        // };
         self._onRestore = function (param) {
             self.__onRestore(param);
         };
@@ -137,6 +137,7 @@ define(function (require) {
                             iconName.push({ key: key, name: 'dataZoomReset' });
                             break;
                         case 'saveAsImage' :
+                        case 'dataView' :
                             // iconName.push({ key: key, name: 'saveAsImage' });
                             break;
                         default :
@@ -295,15 +296,15 @@ define(function (require) {
                     case 'dataZoomReset':
                         itemShape.onclick = self._onDataZoomReset;
                         break;
-                    case 'dataView' :
-                        if (!this._dataView) {
-                            var DataView = require('./dataView');
-                            this._dataView = new DataView(
-                                this.ecTheme, this.messageCenter, this.zr, this.option, this.myChart
-                            );
-                        }
-                        itemShape.onclick = self._onDataView;
-                        break;
+                    // case 'dataView' :
+                    //     if (!this._dataView) {
+                    //         var DataView = require('./dataView');
+                    //         this._dataView = new DataView(
+                    //             this.ecTheme, this.messageCenter, this.zr, this.option, this.myChart
+                    //         );
+                    //     }
+                    //     itemShape.onclick = self._onDataView;
+                    //     break;
                     case 'restore':
                         itemShape.onclick = self._onRestore;
                         break;
@@ -750,10 +751,10 @@ define(function (require) {
             }
         },
 
-        __onDataView: function () {
-            this._dataView.show(this.option);
-            return true;
-        },
+        // __onDataView: function () {
+        //     this._dataView.show(this.option);
+        //     return true;
+        // },
 
         __onRestore: function (){
             // this._resetMark();
@@ -1088,16 +1089,16 @@ define(function (require) {
             if (this.option && this.option.toolbox && this.option.toolbox.show) {
                this._buildShape();
             }
-            if (this._dataView) {
-                this._dataView.resize();
-            }
+            // if (this._dataView) {
+            //     this._dataView.resize();
+            // }
         },
 
-        hideDataView: function () {
-            if (this._dataView) {
-                this._dataView.hide();
-            }
-        },
+        // hideDataView: function () {
+        //     if (this._dataView) {
+        //         this._dataView.hide();
+        //     }
+        // },
         
         clear: function(notMark) {
             if (this.zr) {
@@ -1115,10 +1116,10 @@ define(function (require) {
          * 释放后实例不可用
          */
         onbeforDispose: function () {
-            if (this._dataView) {
-                this._dataView.dispose();
-                this._dataView = null;
-            }
+            // if (this._dataView) {
+            //     this._dataView.dispose();
+            //     this._dataView = null;
+            // }
             this._markShapeList = null;
         },
         
@@ -1139,7 +1140,7 @@ define(function (require) {
                     this._buildShape();
                 }
     
-                this.hideDataView();
+                // this.hideDataView();
             }
         }
     };
