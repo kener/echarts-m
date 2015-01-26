@@ -28,6 +28,7 @@ define(function (require) {
     var DOM_ATTRIBUTE_KEY = '_echarts_instance_';
     
     self.version = '1.0.0';
+    self.mobile = true;
     self.dependencies = {
         zrender: '1.0.0'
     };
@@ -1522,12 +1523,12 @@ define(function (require) {
          */
         showLoading: function (loadingOption) {
             var effectList = {
-                bar: require('zrender/loadingEffect/Bar'),
+                // bar: require('zrender/loadingEffect/Bar'),
                 bubble: require('zrender/loadingEffect/Bubble'),
-                dynamicLine: require('zrender/loadingEffect/DynamicLine'),
-                ring: require('zrender/loadingEffect/Ring'),
-                spin: require('zrender/loadingEffect/Spin'),
-                whirling: require('zrender/loadingEffect/Whirling')
+                // dynamicLine: require('zrender/loadingEffect/DynamicLine'),
+                // ring: require('zrender/loadingEffect/Ring'),
+                spin: require('zrender/loadingEffect/Spin')
+                // whirling: require('zrender/loadingEffect/Whirling')
             };
             this._toolbox.hideDataView();
 
@@ -1561,9 +1562,12 @@ define(function (require) {
             
             var Effect = loadingOption.effect;
             if (typeof Effect === 'string' || Effect == null) {
-                Effect =  effectList[loadingOption.effect
-                          || (this._option && this._option.loadingEffect)
-                          || this._themeConfig.loadingEffect];
+                Effect =  effectList[
+                              loadingOption.effect
+                              || (this._option && this._option.loadingEffect)
+                              || this._themeConfig.loadingEffect
+                          ]
+                          || effectList.spin;
             }
             this._zr.showLoading(new Effect(loadingOption.effectOption));
             return this;
