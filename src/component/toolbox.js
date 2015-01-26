@@ -506,7 +506,7 @@ define(function (require) {
                         end2: zoom.end2
                     });
                     this._iconEnable(this._iconShapeMap['dataZoomReset']);
-                    this.zr.refresh();
+                    this.zr.refreshNextFrame();
                 }
             }
             return true; // 阻塞全局事件
@@ -618,7 +618,7 @@ define(function (require) {
             if (this._zooming || this._zoomStart) {
                 // 取消
                 this._resetZoom();
-                this.zr.refresh();
+                this.zr.refreshNextFrame();
                 this.dom.style.cursor = 'default';
             }
             else {
@@ -626,7 +626,7 @@ define(function (require) {
                 // this._resetMark();   // mark与dataZoom互斥
                 
                 this.zr.modShape(target.id, {style: {strokeColor: this._enableColor}});
-                this.zr.refresh();
+                this.zr.refreshNextFrame();
                 this._zoomStart = true;
                 var self = this;
                 setTimeout(function (){
@@ -655,7 +655,7 @@ define(function (require) {
             else {
                 this.component.dataZoom.rectZoom();
                 this._iconDisable(this._iconShapeMap['dataZoomReset']);
-                this.zr.refresh();
+                this.zr.refreshNextFrame();
             }
             
             return true;

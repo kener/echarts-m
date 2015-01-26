@@ -244,7 +244,7 @@ define(function (require) {
                 this._lastTipShape = false;
                 this.shapeList.length = 2;
             }
-            needRefresh && this.zr.refresh();
+            needRefresh && this.zr.refreshNextFrame();
             this.showing = false;
         },
         
@@ -632,6 +632,8 @@ define(function (require) {
             }
 
             if (seriesArray.length > 0) {
+                // 复位item trigger和axis trigger间短距离来回变换时的不响应
+                this._lastItemTriggerId = -1;
                 // 相同dataIndex seriesIndex时不再触发内容更新
                 if (this._lastDataIndex != dataIndex || this._lastSeriesIndex != seriesIndex[0]) {
                     this._lastDataIndex = dataIndex;
@@ -807,6 +809,9 @@ define(function (require) {
                 if (params.length <= 0) {
                     return;
                 }
+                // 复位item trigger和axis trigger间短距离来回变换时的不响应
+                this._lastItemTriggerId = -1;
+
                 // 相同dataIndex seriesIndex时不再触发内容更新
                 if (this._lastDataIndex != dataIndex || this._lastSeriesIndex != seriesIndex[0]) {
                     this._lastDataIndex = dataIndex;
@@ -925,6 +930,10 @@ define(function (require) {
                 position = this.deepQuery([data, serie, this.option], 'tooltip.islandPosition');
             }
 
+            // 复位item trigger和axis trigger间短距离来回变换时的不响应
+            this._lastDataIndex = -1;
+            this._lastSeriesIndex = -1;
+
             // 相同dataIndex seriesIndex时不再触发内容更新
             if (this._lastItemTriggerId !== this._curTarget.id) {
                 this._lastItemTriggerId = this._curTarget.id;
@@ -1007,20 +1016,19 @@ define(function (require) {
                 }
             }
 
-            // if (!this._axisLineShape.invisible || !this._axisShadowShape.invisible || !this._axisCrossShape.invisible) {
-                // this._axisLineShape.invisible = true;
-                // this.zr.modShape(this._axisLineShape.id);
-                // this._axisShadowShape.invisible = true;
-                // this.zr.modShape(this._axisShadowShape.id);
-                // this.zr.refresh();
-            // }
-            if (serie.type == ecConfig.CHART_TYPE_LINE
-                || serie.type == ecConfig.CHART_TYPE_BAR
-                || serie.type == ecConfig.CHART_TYPE_SCATTER
-                || serie.type == ecConfig.CHART_TYPE_K
-            ) {
-                var x = zrEvent.getX(this._event);
-                var y = zrEvent.getY(this._event);
+            var x = zrEvent.getX(this._event);
+            var y = zrEvent.getY(this._event);
+
+            var axisPointer = this.query(this.option, 'tooltip.trigger') == 'item' 
+                              && this.option.tooltip.axisPointer;
+            axisPointer = (this.query(serie, 'tooltip.trigger') == 'item' 
+                           && serie.tooltip.axisPointer)
+                          || axisPointer;
+            axisPointer = (this.query(data, 'tooltip.trigger') == 'item'
+                           && data.tooltip.axisPointer)
+                          || axisPointer;
+
+            if (axisPointer && this.component.grid) {
                 this._styleAxisPointer(
                     [serie],
                     this.component.grid.getX(), y, 
@@ -1042,12 +1050,7 @@ define(function (require) {
                 this.hasAppend = true;
             }
             
-            this._show(
-                position,
-                zrEvent.getX(this._event) + 20,
-                zrEvent.getY(this._event) - 20,
-                specialCssText
-            );
+            this._show(position, x + 20, y - 20, specialCssText);
         },
 
         _itemFormatter: {
@@ -1123,7 +1126,7 @@ define(function (require) {
                     style[pType].type = axisPointer[pType + 'Style'].type;
                 }
                 for (var i = 0, l = seriesArray.length; i < l; i++) {
-                    // if (this.deepQuery([seriesArray[i], this.option], 'tooltip.trigger') === 'axis') {
+                    //if (this.deepQuery([seriesArray[i], this.option], 'tooltip.trigger') === 'axis') {
                     queryTarget = seriesArray[i];
                     curType = this.query(queryTarget, 'tooltip.axisPointer.type');
                     pointType = curType || pointType; 
@@ -1141,28 +1144,31 @@ define(function (require) {
                             'tooltip.axisPointer.' + curType + 'Style.type'
                         ) || style[curType].type;
                     }
-                    // }
+                    //}
                 }
                 
                 if (pointType === 'line') {
+                    var lineWidth = style.line.width;
+                    var isVertical = xStart == xEnd;
                     this._axisLineShape.style = {
-                        xStart: xStart,
-                        yStart: yStart,
-                        xEnd: xEnd,
-                        yEnd: yEnd,
+                        xStart: isVertical ? this.subPixelOptimize(xStart, lineWidth) : xStart,
+                        yStart: isVertical ? yStart : this.subPixelOptimize(yStart, lineWidth),
+                        xEnd: isVertical ? this.subPixelOptimize(xEnd, lineWidth) : xEnd,
+                        yEnd: isVertical ? yEnd : this.subPixelOptimize(yEnd, lineWidth),
                         strokeColor: style.line.color,
-                        lineWidth: style.line.width,
+                        lineWidth: lineWidth,
                         lineType: style.line.type
                     };
                     this._axisLineShape.invisible = false;
                     this.zr.modShape(this._axisLineShape.id);
                 }
                 else if (pointType === 'cross') {
+                    var crossWidth = style.cross.width;
                     this._axisCrossShape.style = {
                         brushType: 'stroke',
                         rect: this.component.grid.getArea(),
-                        x: x,
-                        y: y,
+                        x: this.subPixelOptimize(x, crossWidth),
+                        y: this.subPixelOptimize(y, crossWidth),
                         text: ('( ' 
                                + this.component.xAxis.getAxis(0).getValueFromCoord(x)
                                + ' , '
@@ -1171,7 +1177,7 @@ define(function (require) {
                               ).replace('  , ', ' ').replace(' ,  ', ' '),
                         textPosition: 'specific',
                         strokeColor: style.cross.color,
-                        lineWidth: style.cross.width,
+                        lineWidth: crossWidth,
                         lineType: style.cross.type
                     };
                     if (this.component.grid.getXend() - x > 100) {          // 右侧有空间
@@ -1237,7 +1243,7 @@ define(function (require) {
                     this._axisShadowShape.invisible = false;
                     this.zr.modShape(this._axisShadowShape.id);
                 }
-                this.zr.refresh();
+                this.zr.refreshNextFrame();
             }
         },
 
@@ -1509,7 +1515,8 @@ define(function (require) {
                     case ecConfig.CHART_TYPE_SCATTER :
                         var dataIndex = params.dataIndex;
                         for (var i = 0, l = shapeList.length; i < l; i++) {
-                            if (ecData.get(shapeList[i], 'seriesIndex') == seriesIndex
+                            if (shapeList[i]._mark == null
+                                && ecData.get(shapeList[i], 'seriesIndex') == seriesIndex
                                 && ecData.get(shapeList[i], 'dataIndex') == dataIndex
                             ) {
                                 this._curTarget = shapeList[i];
@@ -1700,7 +1707,7 @@ define(function (require) {
             this.zr.un(zrConfig.EVENT.MOUSEMOVE, this._onmousemove);
             this.zr.un(zrConfig.EVENT.GLOBALOUT, this._onglobalout);
             
-            if (this.hasAppend) {
+            if (this.hasAppend && !!this.dom.firstChild) {
                 this.dom.firstChild.removeChild(this._tDom);
             }
             this._tDom = null;

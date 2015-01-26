@@ -85,6 +85,10 @@ define(function (require) {
      * @param {HtmlElement} dom 必要
      */
     function Echarts(dom) {
+        // Fxxk IE11 for breaking initialization without a warrant;
+        // Just set something to let it be!
+        // by kener 2015-01-09
+        dom.innerHTML = '';
         this._themeConfig = zrUtil.clone(ecConfig);
 
         this.dom = dom;
@@ -520,7 +524,7 @@ define(function (require) {
             
             // 没有相互影响，直接刷新即可
             if (this._status.needRefresh) {
-                this._zr.refresh();
+                this._zr.refreshNextFrame();
             }
         },
 
@@ -609,7 +613,8 @@ define(function (require) {
         _noDataCheck: function(magicOption) {
             var series = magicOption.series;
             for (var i = 0, l = series.length; i < l; i++) {
-                if ((series[i].data && series[i].data.length > 0)
+                if (series[i].type == ecConfig.CHART_TYPE_MAP
+                    || (series[i].data && series[i].data.length > 0)
                     || (series[i].markPoint && series[i].markPoint.data && series[i].markPoint.data.length > 0)
                     || (series[i].markLine && series[i].markLine.data && series[i].markLine.data.length > 0)
                     || (series[i].nodes && series[i].nodes.length > 0)
@@ -622,10 +627,14 @@ define(function (require) {
             }
             // 空数据
             this.clear();
-            var loadOption = this._themeConfig.noDataLoadingOption || {
-                text: this._themeConfig.noDataText,
-                effect: this._themeConfig.noDataEffect
-            };
+            var loadOption = (this._option && this._option.noDataLoadingOption)
+                || this._themeConfig.noDataLoadingOption 
+                || {
+                    text: (this._option && this._option.noDataText)
+                          || this._themeConfig.noDataText,
+                    effect: (this._option && this._option.noDataEffect)
+                            || this._themeConfig.noDataEffect
+                 };
             this.showLoading(loadOption);
             return true;
         },
@@ -857,7 +866,8 @@ define(function (require) {
                 'nameConnector', 'valueConnector',
                 
                 // 动画相关
-                'animation', 'animationThreshold', 'animationDuration',
+                'animation', 'animationThreshold',
+                'animationDuration', 'animationDurationUpdate',
                 'animationEasing', 'addDataAnimation',
                 
                 // 默认标志图形类型列表
@@ -1151,7 +1161,7 @@ define(function (require) {
                     {option: magicOption},
                     self
                 );
-            }, magicOption.addDataAnimation ? 500 : 0);
+            }, magicOption.addDataAnimation ? magicOption.animationDurationUpdate : 0);
             return this;
         },
 
@@ -1535,7 +1545,9 @@ define(function (require) {
                                  + finalTextStyle.fontSize + 'px '
                                  + finalTextStyle.fontFamily;
 
-            textStyle.text = loadingOption.text || this._themeConfig.loadingText;
+            textStyle.text = loadingOption.text 
+                             || (this._option && this._option.loadingText)
+                             || this._themeConfig.loadingText;
 
             if (loadingOption.x != null) {
                 textStyle.x = loadingOption.x;
@@ -1549,7 +1561,9 @@ define(function (require) {
             
             var Effect = loadingOption.effect;
             if (typeof Effect === 'string' || Effect == null) {
-                Effect =  effectList[loadingOption.effect || this._themeConfig.loadingEffect];
+                Effect =  effectList[loadingOption.effect
+                          || (this._option && this._option.loadingEffect)
+                          || this._themeConfig.loadingEffect];
             }
             this._zr.showLoading(new Effect(loadingOption.effectOption));
             return this;

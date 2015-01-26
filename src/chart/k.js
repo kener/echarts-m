@@ -377,6 +377,9 @@ define(function (require) {
                 clickable: this.deepQuery(
                     [series[seriesIndex].data[dataIndex], series[seriesIndex]], 'clickable'
                 ),
+                hoverable: this.deepQuery(
+                    [series[seriesIndex].data[dataIndex], series[seriesIndex]], 'hoverable'
+                ),
                 style: {
                     x: x,
                     y: [y0, y1, y2, y3],
@@ -475,7 +478,7 @@ define(function (require) {
                         y = 0;
                         this.zr.animate(this.shapeList[i].id, '')
                             .when(
-                                500,
+                                this.query(this.option, 'animationDurationUpdate'),
                                 { position: [ x, y ] }
                             )
                             .start();

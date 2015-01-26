@@ -233,7 +233,7 @@ define(function (require) {
             var itemWidth = this.dataRangeOption.itemWidth;
             var itemHeight = this.dataRangeOption.itemHeight;
             var textHeight = zrArea.getTextHeight('国', font);
-            var mSize = 6;
+            var mSize = 10;
 
             
             var needValueText = true;
@@ -733,7 +733,7 @@ define(function (require) {
             var totalHeight = 0;
             var font = this.getFont(this.dataRangeOption.textStyle);
             var textHeight = zrArea.getTextHeight('国', font);
-            var mSize = 6;
+            var mSize = 10;
 
             if (this.dataRangeOption.orient == 'horizontal') {
                 // 水平布局，计算总宽度
@@ -1208,7 +1208,7 @@ define(function (require) {
             this.zr.modShape(this._startMask.id);
             this.zr.modShape(this._endMask.id);
             this.zr.modShape(this._fillerShape.id);
-            this.zr.refresh();
+            this.zr.refreshNextFrame();
         },
 
         _syncData : function () {
@@ -1302,7 +1302,7 @@ define(function (require) {
                 && param.seriesIndex != null && param.dataIndex != null
             ) {
                 var curValue = param.value;
-                if (isNaN(curValue)) {
+                if (curValue == '' || isNaN(curValue)) {
                     return;
                 }
                 if (curValue < this.dataRangeOption.min) {
@@ -1336,8 +1336,7 @@ define(function (require) {
 
         _textFormat : function(valueStart, valueEnd) {
             valueStart = valueStart.toFixed(this.dataRangeOption.precision);
-            valueEnd = typeof valueEnd != 'undefined' 
-                       ? valueEnd.toFixed(this.dataRangeOption.precision) : '';
+            valueEnd = valueEnd != null ? valueEnd.toFixed(this.dataRangeOption.precision) : '';
             if (this.dataRangeOption.formatter) {
                 if (typeof this.dataRangeOption.formatter == 'string') {
                     return this.dataRangeOption.formatter.replace('{value}', valueStart)

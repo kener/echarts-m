@@ -654,6 +654,7 @@ define(function() {
             zlevel: 0,                  // 一级层叠
             z: 2,                       // 二级层叠
             clickable: true,
+            hoverable: true,
             legendHoverLink: false,
             xAxisIndex: 0,
             yAxisIndex: 0,
@@ -693,16 +694,8 @@ define(function() {
                 normal: {
                     // color: 各异,
                     label: {
-                        show: false,
-                        // 标签文本格式器，同Tooltip.formatter，不支持回调
-                        formatter: function (a, b, c) {
-                            if (typeof c[2] != 'undefined') {
-                                return c[2];
-                            }
-                            else {
-                                return c[0] + ' , ' + c[1];
-                            }
-                        }
+                        show: false
+                        // formatter: 标签文本格式器，同Tooltip.formatter，不支持异步回调
                         // position: 默认自适应，水平布局为'top'，垂直布局为'right'，可选为
                         //           'inside'|'left'|'right'|'top'|'bottom'
                         // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
@@ -711,16 +704,9 @@ define(function() {
                 emphasis: {
                     // color: '各异'
                     label: {
-                        show: false,
+                        show: false
                         // 标签文本格式器，同Tooltip.formatter，不支持回调
-                        formatter: function (a, b, c) {
-                            if (typeof c[2] != 'undefined') {
-                                return c[2];
-                            }
-                            else {
-                                return c[0] + ' , ' + c[1];
-                            }
-                        }
+                        // formatter: 标签文本格式器，同Tooltip.formatter，不支持异步回调
                         // position: 默认自适应，水平布局为'top'，垂直布局为'right'，可选为
                         //           'inside'|'left'|'right'|'top'|'bottom'
                         // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
@@ -783,6 +769,7 @@ define(function() {
                         position: 'outer'
                         // formatter: 标签文本格式器，同Tooltip.formatter，不支持回调
                         // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
+                        // distance: 当position为inner时有效，为label位置到圆心的距离与圆半径(环状图为内外半径和)的比例系数
                     },
                     labelLine: {
                         show: true,
@@ -803,6 +790,7 @@ define(function() {
                         // position: 'outer'
                         // formatter: 标签文本格式器，同Tooltip.formatter，不支持回调
                         // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
+                        // distance: 当position为inner时有效，为label位置到圆心的距离与圆半径(环状图为内外半径和)的比例系数
                     },
                     labelLine: {
                         show: false,
@@ -1073,6 +1061,7 @@ define(function() {
             zlevel: 0,                  // 一级层叠
             z: 2,                       // 二级层叠
             center: ['50%', '50%'],    // 默认全局居中
+            clickable: true,
             legendHoverLink: true,
             radius: '80%',
             startAngle: 225,
@@ -1170,7 +1159,7 @@ define(function() {
                     label: {
                         show: true,
                         position: 'outer'
-                        // formatter: 标签文本格式器，同Tooltip.formatter，不支持回调
+                        // formatter: 标签文本格式器，同Tooltip.formatter，不支持异步回调
                         // textStyle: null      // 默认使用全局文本样式，详见TEXTSTYLE
                     },
                     labelLine: {
@@ -1242,10 +1231,12 @@ define(function() {
                 show: false,
                 loop: true,
                 period: 15,             // 运动周期，无单位，值越大越慢
-                scaleSize: 2            // 放大倍数，以markPoint点size为基准
+                type: 'scale',          // 可用为 scale | bounce
+                scaleSize: 2,           // 放大倍数，以markPoint点size为基准
+                bounceDistance: 10,     // 跳动距离，单位px
                 // color: 'gold',
                 // shadowColor: 'rgba(255,215,0,0.8)',
-                // shadowBlur: 0          // 炫光模糊
+                shadowBlur: 0          // 炫光模糊
             },
             itemStyle: {
                 normal: {
@@ -1282,7 +1273,7 @@ define(function() {
             // 标线起始和结束的symbol旋转控制
             //symbolRotate: null,
             //smooth: false,
-            large: false,
+            smoothRadian: 0.2,    // 平滑弧度
             precision: 2,
             effect: {
                 show: false,
@@ -1384,9 +1375,9 @@ define(function() {
           'circle', 'rectangle', 'triangle', 'diamond'
         ],
         loadingEffect: 'spin',
-        loadingText: 'Loading...',
+        loadingText: '数据读取中...',
         noDataEffect: 'bubble',
-        noDataText: 'No Data Available.',
+        noDataText: '暂无数据',
         // noDataLoadingOption: null,
         // 可计算特性配置，孤岛，提示颜色
         calculable: false,                      // 默认关闭可计算特性
@@ -1397,7 +1388,8 @@ define(function() {
         animation: true,                // 过渡动画是否开启
         addDataAnimation: true,         // 动态数据接口是否开启动画效果
         animationThreshold: 2000,       // 动画元素阀值，产生的图形原素超过2000不出动画
-        animationDuration: 2000,
+        animationDuration: 2000,        // 过渡动画参数：进入
+        animationDurationUpdate: 500,   // 过渡动画参数：更新
         animationEasing: 'ExponentialOut'    //BounceOut
     };
 
