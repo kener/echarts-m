@@ -17,6 +17,7 @@ define(function (require) {
     ecConfig.title = {
         zlevel: 0,                  // 一级层叠
         z: 6,                       // 二级层叠
+        show: true,
         text: '',
         // link: null,             // 超链接跳转
         // target: null,           // 仅支持self | blank

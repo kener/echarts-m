@@ -27,7 +27,7 @@ define(function (require) {
         // min: null,          // 最小值
         // max: null,          // 最大值
         // scale: false,       // 脱离0值比例，放大聚焦到最终_min，_max区间
-        //splitNumber: 5,        // 分割段数，默认为5
+        // splitNumber: 5,        // 分割段数，默认为5
         axisLine: {            // 坐标轴线
             show: false,        // 默认显示，属性show控制显示与否
             onZero: true,

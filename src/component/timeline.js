@@ -20,7 +20,7 @@ define(function (require) {
         show: true,
         type: 'time',  // 模式是时间类型，支持 number
         notMerge: false,
-        realtime: true,
+        realtime: false,
         x: 1,
         // y: {number},
         x2: 2,

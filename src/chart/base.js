@@ -734,6 +734,7 @@ define(function (require) {
                 ),
                 zrUtil.clone(ecConfig.markPoint)
             );
+
             mpOption.name = serie.name;
                    
             var pList = [];
@@ -842,6 +843,7 @@ define(function (require) {
                 ),
                 zrUtil.clone(ecConfig.markLine)
             );
+
             // 标准化一些同时支持Array和String的参数
             mlOption.symbol = mlOption.symbol instanceof Array
                       ? mlOption.symbol.length > 1 
