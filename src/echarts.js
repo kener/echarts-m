@@ -90,7 +90,7 @@ define(function (require) {
         // Just set something to let it be!
         // by kener 2015-01-09
         dom.innerHTML = '';
-        this._themeConfig = zrUtil.clone(ecConfig);
+        this._themeConfig = {}; // zrUtil.clone(ecConfig);
 
         this.dom = dom;
         // this._zr;
@@ -229,18 +229,18 @@ define(function (require) {
             var Island = require('./chart/island');
             this._island = new Island(this._themeConfig, this._messageCenter, _zr, {}, this);
             this.chart.island = this._island;
-            
+
             // 内置通用组件
             // 工具箱
             var Toolbox = require('./component/toolbox');
             this._toolbox = new Toolbox(this._themeConfig, this._messageCenter, _zr, {}, this);
             this.component.toolbox = this._toolbox;
-            
+
             var componentLibrary = require('./component');
             componentLibrary.define('title', require('./component/title'));
             componentLibrary.define('tooltip', require('./component/tooltip'));
             componentLibrary.define('legend', require('./component/legend'));
-            
+
             if (_zr.getWidth() === 0 || _zr.getHeight() === 0) {
                 console.error('Dom’s width & height should be ready before init.');
             }
@@ -629,13 +629,16 @@ define(function (require) {
             // 空数据
             this.clear();
             var loadOption = (this._option && this._option.noDataLoadingOption)
-                || this._themeConfig.noDataLoadingOption 
+                || this._themeConfig.noDataLoadingOption
+                || ecConfig.noDataLoadingOption
                 || {
                     text: (this._option && this._option.noDataText)
-                          || this._themeConfig.noDataText,
+                          || this._themeConfig.noDataText
+                          || ecConfig.noDataText,
                     effect: (this._option && this._option.noDataEffect)
                             || this._themeConfig.noDataEffect
-                 };
+                            || ecConfig.noDataEffect
+                };
             this.showLoading(loadOption);
             return true;
         },
@@ -882,14 +885,16 @@ define(function (require) {
             while (len--) {
                 var mergeItem = mergeList[len];
                 if (magicOption[mergeItem] == null) {
-                    magicOption[mergeItem] = this._themeConfig[mergeItem];
+                    magicOption[mergeItem] = this._themeConfig[mergeItem] != null
+                        ? this._themeConfig[mergeItem]
+                        : ecConfig[mergeItem];
                 }
             }
             
             // 数值系列的颜色列表，不传则采用内置颜色，可配数组，借用zrender实例注入，会有冲突风险，先这样
             var themeColor = magicOption.color;
             if (!(themeColor && themeColor.length)) {
-                themeColor = this._themeConfig.color;
+                themeColor = this._themeConfig.color || ecConfig.color;
             }
             
             this._zr.getColor = function (idx) {
@@ -1056,7 +1061,6 @@ define(function (require) {
                 dataGrow = params[i][3];
                 additionData = params[i][4];
 
-                
                 var seriesItem = optionRestore.series[seriesIdx];
                 var inMethod = isHead ? 'unshift' : 'push';
                 var outMethod = isHead ? 'pop' : 'shift';
@@ -1070,7 +1074,6 @@ define(function (require) {
                         seriesItemData[outMethod]();
                         data = mSeriesItemData[outMethod]();
                     }
-                    
                     
                     if (additionData != null) {
                         var legend;
@@ -1538,9 +1541,13 @@ define(function (require) {
             loadingOption.textStyle = textStyle;
 
             var finalTextStyle = zrUtil.merge(
-                zrUtil.clone(textStyle),
-                this._themeConfig.textStyle
+                zrUtil.merge(
+                    zrUtil.clone(textStyle),
+                    this._themeConfig.textStyle
+                ),
+                ecConfig.textStyle
             );
+            
             textStyle.textFont = finalTextStyle.fontStyle + ' '
                                  + finalTextStyle.fontWeight + ' '
                                  + finalTextStyle.fontSize + 'px '
@@ -1548,7 +1555,8 @@ define(function (require) {
 
             textStyle.text = loadingOption.text 
                              || (this._option && this._option.loadingText)
-                             || this._themeConfig.loadingText;
+                             || this._themeConfig.loadingText
+                             || ecConfig.loadingText;
 
             if (loadingOption.x != null) {
                 textStyle.x = loadingOption.x;
@@ -1566,6 +1574,7 @@ define(function (require) {
                               loadingOption.effect
                               || (this._option && this._option.loadingEffect)
                               || this._themeConfig.loadingEffect
+                              || ecConfig.loadingEffect
                           ]
                           || effectList.spin;
             }
@@ -1603,24 +1612,25 @@ define(function (require) {
                     theme = theme || {};
                 }
                 
-                // 复位默认配置
-                // this._themeConfig会被别的对象引用持有
-                // 所以不能改成this._themeConfig = {};
-                for (var key in this._themeConfig) {
-                    delete this._themeConfig[key];
-                }
-                for (var key in ecConfig) {
-                    this._themeConfig[key] = zrUtil.clone(ecConfig[key]);
-                }
+                // // 复位默认配置
+                // // this._themeConfig会被别的对象引用持有
+                // // 所以不能改成this._themeConfig = {};
+                // for (var key in this._themeConfig) {
+                //     delete this._themeConfig[key];
+                // }
+                // for (var key in ecConfig) {
+                //     this._themeConfig[key] = zrUtil.clone(ecConfig[key]);
+                // }
                 
-                // 颜色数组随theme，不merge
-                theme.color && (this._themeConfig.color = []);
+                // // 颜色数组随theme，不merge
+                // theme.color && (this._themeConfig.color = []);
                 
-                // 默认标志图形类型列表，不merge
-                theme.symbolList && (this._themeConfig.symbolList = []);
+                // // 默认标志图形类型列表，不merge
+                // theme.symbolList && (this._themeConfig.symbolList = []);
                 
-                // 应用新主题
-                zrUtil.merge(this._themeConfig, zrUtil.clone(theme), true);
+                // // 应用新主题
+                // zrUtil.merge(this._themeConfig, zrUtil.clone(theme), true);
+                this._themeConfig = theme;
             }
             
             this._timeline && this._timeline.setTheme(true);
