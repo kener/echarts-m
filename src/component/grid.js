@@ -17,7 +17,7 @@ define(function (require) {
         zlevel: 0,                  // 一级层叠
         z: 0,                       // 二级层叠
         x: 12,
-        y: 80,
+        y: 60,
         x2: 12,
         y2: 60,
         // width: {totalWidth} - x - x2,

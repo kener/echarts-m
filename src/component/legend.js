@@ -27,7 +27,7 @@ define(function (require) {
         x: 'center',               // 水平安放位置，默认为全图居中，可选为：
                                    // 'center' ¦ 'left' ¦ 'right'
                                    // ¦ {number}（x坐标，单位px）
-        y: '45',                  // 垂直安放位置，默认为全图顶端，可选为：
+        y: 'top',                  // 垂直安放位置，默认为全图顶端，可选为：
                                    // 'top' ¦ 'bottom' ¦ 'center'
                                    // ¦ {number}（y坐标，单位px）
         backgroundColor: 'rgba(0,0,0,0)',
