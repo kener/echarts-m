@@ -922,7 +922,7 @@ require(['echarts'], function (ec){
                                 <a href="#Animation" title="">animation</a>, and other related properties like 
                                 <a href="#AddDataAnimation" title="">addDataAnimation</a>, 
                                 <a href="#AnimationThreshold" title="">animationThreshold</a>, 
-                                <a href="#AnimationDuration" title="">animationDuration</a>, 
+                                <a href="#AnimationDuration" title="">animationDuration</a>,
                                 <a href="#animationDurationUpdate" title="">
                                     animationDurationUpdate
                                 </a> 
@@ -1608,7 +1608,7 @@ require(['echarts'], function (ec){
         color: 'rgba(150,150,150,0.3)',
         width: 'auto',
         type: 'default'
-                                } 
+    }
 }                           </pre></td>
                             <td> axis pointer, triggered by axis. Default type is line. Valid types are: 'line' | 'cross' | 'shadow' | 'none'. Each type has its corresponding style, see below.
                                  <br/>lineStyle: style for line pointer, (see <a href="#LineStyle" title="">lineStyle</a>),
@@ -1887,7 +1887,6 @@ require(['echarts'], function (ec){
                             <td> 5 </td>
                             <td> the number of segments. Defaults to 5. Linear gradient when set to 0. When calculable is true, it is equally split into 100 parts by default. </td>
                         </tr>
-
                         <tr>
                             <td> <b>{boolean | string}</b> selectedMode </td>
                             <td> true </td>
@@ -2175,7 +2174,7 @@ require(['echarts'], function (ec){
                         <tr>
                             <td> <b>{number}</b> height </td>
                             <td> adaptive </td>
-                            <td> Height of the grid (without axes), defaults to the total height - x - x2, in px, ignore x2 after specifying height. See the image below.
+                            <td> Height of the grid (without axes), defaults to the total height - y - y2, in px, ignore y2 after specifying height. See the image below.
                                  <br/>Can also be set in percent (string), such as '50%' (half the height of the display area). </td>
                         </tr>
                         <tr>
@@ -3532,7 +3531,7 @@ indicator : [
                         <tr>
                             <td> <b>{number | string}</b> height </td>
                             <td> null </td>
-                            <td> The total height, defaults to the drawing area's total height - x - x2, in px, ignore x2 after specifying height. Can also be set in percent (string), such as '50%' (half the height of the display area). </td>
+                            <td> The total height, defaults to the drawing area's total height - y - y2, in px, ignore y2 after specifying height. Can also be set in percent (string), such as '50%' (half the height of the display area). </td>
                         </tr>
                         <tr>
                             <td> <b>{string}</b> funnelAlign </td>
