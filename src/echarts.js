@@ -1533,7 +1533,7 @@ define(function (require) {
                 spin: require('zrender/loadingEffect/Spin')
                 // whirling: require('zrender/loadingEffect/Whirling')
             };
-            this._toolbox.hideDataView();
+            // this._toolbox.hideDataView();
 
             loadingOption = loadingOption || {};
 
