@@ -7,7 +7,7 @@
  */
 define(function (require) {
     var ecConfig = require('../config');
-    var ecData = require('../util/ecData');
+    // var ecData = require('../util/ecData');
     var ecQuery = require('../util/ecQuery');
     var number = require('../util/number');
     var zrUtil = require('zrender/tool/util');
@@ -54,11 +54,11 @@ define(function (require) {
         _getZ : function(zWhat) {
             var opt = this.ecTheme[this.type];
             if (opt && opt[zWhat] != null) {
-                return opt[zWhat]
+                return opt[zWhat];
             }
             opt = ecConfig[this.type];
             if (opt && opt[zWhat] != null) {
-                return opt[zWhat]
+                return opt[zWhat];
             }
             return 0;
         },

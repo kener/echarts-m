@@ -9,7 +9,7 @@ define(function (require) {
     var Base = require('./base');
     
     // 图形依赖
-    var LineShape = require('zrender/shape/Line');
+    // var LineShape = require('zrender/shape/Line');
     var ImageShape = require('zrender/shape/Image');
     var RectangleShape = require('zrender/shape/Rectangle');
     var IconShape = require('../util/shape/Icon');
