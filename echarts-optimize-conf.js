@@ -1,8 +1,8 @@
 exports.modules = {
     main: {name: 'echarts/echarts'},
     parts: [
-        {name: 'echarts/chart/line', weight: 100},
-        {name: 'echarts/chart/bar', weight: 100},
+        {name: 'echarts/chart/line', weight: 90},
+        {name: 'echarts/chart/bar', weight: 90},
         {name: 'echarts/chart/scatter', weight: 90},
         {name: 'echarts/chart/k', weight: 30},
         {name: 'echarts/chart/pie', weight: 90},
@@ -62,12 +62,12 @@ exports.amd = {
     packages: [
         {
             name: 'echarts',
-            location: '../src',
+            location: './src',
             main: 'echarts'
         },
         {
             name: 'zrender',
-            location: '../../zrender-m/src',
+            location: '../zrender-m/src',
             main: 'zrender'
         }
     ]
