@@ -35,7 +35,7 @@ define(function (require) {
     var Base = require('zrender/shape/Base');
     var PathProxy = require('zrender/shape/util/PathProxy');
     var zrUtil = require('zrender/tool/util');
-    var area = require('zrender/tool/area');
+    // var area = require('zrender/tool/area');
 
     // var _ctx = zrUtil.getContext();
     
@@ -105,20 +105,20 @@ define(function (require) {
                 this.buildPath(null, style);
             }
             return this._pathProxy.fastBoundingRect();
-        },
-
-        isCover : function (x, y) {
-            var rect = this.getRect(this.style);
-            if (x >= rect.x
-                && x <= (rect.x + rect.width)
-                && y >= rect.y
-                && y <= (rect.y + rect.height)
-            ) {
-                return area.isInsidePath(
-                    this._pathProxy.pathCommands, 0, 'fill', x, y
-                );
-            }
         }
+
+        // isCover : function (x, y) {
+        //     var rect = this.getRect(this.style);
+        //     if (x >= rect.x
+        //         && x <= (rect.x + rect.width)
+        //         && y >= rect.y
+        //         && y <= (rect.y + rect.height)
+        //     ) {
+        //         return area.isInsidePath(
+        //             this._pathProxy.pathCommands, 0, 'fill', x, y
+        //         );
+        //     }
+        // }
     };
 
     zrUtil.inherits(RibbonShape, Base);
