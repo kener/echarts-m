@@ -1,4 +1,4 @@
-var developMode = true;
+var developMode = false;
 if (developMode) {
     window.esl = null;
     window.define = null;
