@@ -43,7 +43,7 @@ if ($('[name=theme-select]').val(hash).val() != hash) {
     hash = 'infographic';
 }
 
-var developMode = true;
+var developMode = false;
 if (developMode) {
     window.esl = null;
     window.define = null;
