@@ -64,7 +64,7 @@ define(function() {
                 bounceDistance: 10,     // 跳动距离，单位px
                 // color: 'gold',
                 // shadowColor: 'rgba(255,215,0,0.8)',
-                shadowBlur: 0          // 炫光模糊
+                // shadowBlur: 0          // 炫光模糊
             },
             itemStyle: {
                 normal: {

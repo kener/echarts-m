@@ -272,7 +272,7 @@ define(function (require) {
             var itemWidth = this.dataRangeOption.itemWidth;
             var itemHeight = this.dataRangeOption.itemHeight;
             var textHeight = zrArea.getTextHeight('国', font);
-            var mSize = 10;
+            var mSize = 6;
 
             
             var needValueText = true;
@@ -772,7 +772,7 @@ define(function (require) {
             var totalHeight = 0;
             var font = this.getFont(this.dataRangeOption.textStyle);
             var textHeight = zrArea.getTextHeight('国', font);
-            var mSize = 10;
+            var mSize = 6;
 
             if (this.dataRangeOption.orient == 'horizontal') {
                 // 水平布局，计算总宽度
