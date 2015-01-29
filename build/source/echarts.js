@@ -2711,8 +2711,7 @@ define('echarts/echarts', [
                 period: 15,
                 type: 'scale',
                 scaleSize: 2,
-                bounceDistance: 10,
-                shadowBlur: 0
+                bounceDistance: 10
             },
             itemStyle: {
                 normal: {
@@ -2839,6 +2838,10 @@ define('echarts/echarts', [
         '[object Error]': 1,
         '[object CanvasGradient]': 1
     };
+    var objToString = Object.prototype.toString;
+    function isDom(obj) {
+        return obj && obj.nodeType === 1 && typeof obj.nodeName == 'string';
+    }
     function clone(source) {
         if (typeof source == 'object' && source !== null) {
             var result = source;
@@ -2847,7 +2850,7 @@ define('echarts/echarts', [
                 for (var i = 0, len = source.length; i < len; i++) {
                     result[i] = clone(source[i]);
                 }
-            } else if (!BUILTIN_OBJECT[Object.prototype.toString.call(source)] && !(source.nodeType === 1 && typeof source.nodeName === 'string')) {
+            } else if (!BUILTIN_OBJECT[objToString.call(source)] && !isDom(source)) {
                 result = {};
                 for (var key in source) {
                     if (source.hasOwnProperty(key)) {
@@ -2861,7 +2864,8 @@ define('echarts/echarts', [
     }
     function mergeItem(target, source, key, overwrite) {
         if (source.hasOwnProperty(key)) {
-            if (typeof target[key] == 'object' && !BUILTIN_OBJECT[Object.prototype.toString.call(target[key])]) {
+            var targetProp = target[key];
+            if (typeof targetProp == 'object' && !BUILTIN_OBJECT[objToString.call(targetProp)] && !isDom(targetProp)) {
                 merge(target[key], source[key], overwrite);
             } else if (overwrite || !(key in target)) {
                 target[key] = source[key];
@@ -10589,6 +10593,7 @@ define('zrender/zrender', [
         this.dom.style['-webkit-user-select'] = 'none';
         this.dom.style['user-select'] = 'none';
         this.dom.style['-webkit-touch-callout'] = 'none';
+        this.dom.style['-webkit-tap-highlight-color'] = 'rgba(0,0,0,0)';
         vmlCanvasManager && vmlCanvasManager.initElement(this.dom);
         this.domBack = null;
         this.ctxBack = null;
@@ -12894,7 +12899,11 @@ define('zrender/zrender', [
                         this.zr.delShape(lastShapeList[i].id);
                     } else {
                         key += lastShapeList[i].type;
-                        oldMap[key] = lastShapeList[i];
+                        if (oldMap[key]) {
+                            this.zr.delShape(lastShapeList[i].id);
+                        } else {
+                            oldMap[key] = lastShapeList[i];
+                        }
                     }
                 }
                 for (var i = 0, l = shapeList.length; i < l; i++) {

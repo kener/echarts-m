@@ -1756,7 +1756,7 @@ define('echarts/chart/scatter', [
             var itemWidth = this.dataRangeOption.itemWidth;
             var itemHeight = this.dataRangeOption.itemHeight;
             var textHeight = zrArea.getTextHeight('国', font);
-            var mSize = 10;
+            var mSize = 6;
             var needValueText = true;
             if (this.dataRangeOption.text) {
                 needValueText = false;
@@ -2327,7 +2327,7 @@ define('echarts/chart/scatter', [
             var totalHeight = 0;
             var font = this.getFont(this.dataRangeOption.textStyle);
             var textHeight = zrArea.getTextHeight('国', font);
-            var mSize = 10;
+            var mSize = 6;
             if (this.dataRangeOption.orient == 'horizontal') {
                 if (this.dataRangeOption.text || this.dataRangeOption.splitNumber <= 0 || this.dataRangeOption.calculable) {
                     totalWidth = (this.dataRangeOption.splitNumber <= 0 || this.dataRangeOption.calculable ? itemWidth * mSize + itemGap : dataLength * (itemWidth + itemGap)) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[0] != 'undefined' ? zrArea.getTextWidth(this.dataRangeOption.text[0], font) + this._textGap : 0) + (this.dataRangeOption.text && typeof this.dataRangeOption.text[1] != 'undefined' ? zrArea.getTextWidth(this.dataRangeOption.text[1], font) + this._textGap : 0);
