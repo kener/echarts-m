@@ -900,8 +900,8 @@ var optionMap = {
                             label : {
                                 show:true,
                                 position:'top',
-                                formatter: function (a,b,v) {
-                                    return (v/1000000).toFixed(1) + ' M'
+                                formatter: function (params) {
+                                    return (params.value/1000000).toFixed(1) + ' M'
                                 }
                             }
                         }
@@ -918,8 +918,8 @@ var optionMap = {
                             color:'#1e90ff',
                             label : {
                                 show:true,
-                                formatter: function (a,b,v) {
-                                    return (v/1000000).toFixed(1) + ' M'
+                                formatter: function (params) {
+                                    return (params.value/1000000).toFixed(1) + ' M'
                                 }
                             }
                         }
@@ -3610,4 +3610,8 @@ var optionMap = {
         };
     })(),
     adddddd : {}
+}
+if (document.location.href.indexOf('local') == -1) {
+    var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fb78830c9a5dad062d08b90b2bc0cf5da' type='text/javascript'%3E%3C/script%3E"));   
 }
